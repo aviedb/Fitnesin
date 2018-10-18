@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_fitnesin"
-        android:icon="@drawable/ic_fitness_24dp"
+        android:icon="@drawable/fa_dumbbell"
         android:title="@string/title_fitnesin" />
 
     <item
         android:id="@+id/navigation_find_instructor"
-        android:icon="@drawable/ic_supervisor_24dp"
+        android:icon="@drawable/fa_chalkboard_teacher"
         android:title="@string/title_find_instructor" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile_24dp"
+        android:icon="@drawable/fa_user"
         android:title="@string/title_profile" />
 
 </menu>
