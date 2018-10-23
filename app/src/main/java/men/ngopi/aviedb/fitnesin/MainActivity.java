@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (outState == null) {
+            getSupportFragmentManager().putFragment(outState, "myFragment", fragment);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            fragment = getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        loadFragment(fragment);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadFragment(fragment);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
+        fragment = null;
 
         switch (item.getItemId()) {
             case R.id.navigation_fitnesin:

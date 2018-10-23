@@ -7,4 +7,9 @@
     <string name="title_fitnesin">Fitnesin</string>
     <string name="title_find_instructor">Find Instructor</string>
     <string name="search_for_instructor">Search for Instructor</string>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string name="title_activity_instructor_info">InstructorInfo</string>
 </resources>

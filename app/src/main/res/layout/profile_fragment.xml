@@ -1,13 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff"
+        android:fitsSystemWindows="true"
+        android:paddingHorizontal="20dp"
+        android:gravity="center">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans"
+            android:text="My Profile"
+            android:textSize="25sp"
+            android:textColor="#424242"
+            android:gravity="center"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/avatar"
+                android:elevation="5dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Muhammad Avied Bachmid"
+                android:textSize="25sp"
+                android:layout_marginTop="10dp"
+                android:textColor="#424242"
+                android:drawableEnd="@drawable/ic_edit_black_24dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/google_sans"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+62 822 9221 2073"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/google_sans"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D9D9D9"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="About Me"
+                    android:textColor="#424242"
+                    android:fontFamily="@font/google_sans"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="20dp"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        app:boxCornerRadiusTopStart="7.5dp"
+                        app:boxCornerRadiusTopEnd="7.5dp"
+                        app:boxCornerRadiusBottomStart="7.5dp"
+                        app:boxCornerRadiusBottomEnd="7.5dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:singleLine="true"
+                            android:enabled="false"
+                            android:fontFamily="@font/google_sans"
+                            android:text=" "
+                            android:hint="Gender"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <Spinner
+                        style="@style/GoogleSansFont"
+                        android:id="@+id/genderSpinner"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="2dp"/>
+
+                </FrameLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="7.5dp"
+                    app:boxCornerRadiusTopEnd="7.5dp"
+                    app:boxCornerRadiusBottomStart="7.5dp"
+                    app:boxCornerRadiusBottomEnd="7.5dp"
+                    android:layout_marginBottom="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:textColor="#424242"
+                        android:text="Aug 6, 2000"
+                        android:clickable="true"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:inputType="date"
+                        android:drawableEnd="@drawable/fa_calendar_alt"
+                        android:hint="Birthday"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="7.5dp"
+                    app:boxCornerRadiusTopEnd="7.5dp"
+                    app:boxCornerRadiusBottomStart="7.5dp"
+                    app:boxCornerRadiusBottomEnd="7.5dp"
+                    android:layout_marginBottom="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/birthday"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:textColor="#424242"
+                        android:inputType="number"
+                        android:text="80"
+                        android:hint="Weight (kg)"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="7.5dp"
+                    app:boxCornerRadiusTopEnd="7.5dp"
+                    app:boxCornerRadiusBottomStart="7.5dp"
+                    app:boxCornerRadiusBottomEnd="7.5dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:textColor="#424242"
+                        android:inputType="number"
+                        android:text="170"
+                        android:hint="Height (cm)"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <android.support.design.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/saveBtn"
+                android:fontFamily="@font/google_sans"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textAllCaps="false"
+                android:text="Save"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
