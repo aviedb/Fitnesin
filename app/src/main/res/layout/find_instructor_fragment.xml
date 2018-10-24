@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/google_sans"
+                android:inputType="text"
                 android:hint="@string/search_for_instructor"/>
 
         </android.support.design.widget.TextInputLayout>
