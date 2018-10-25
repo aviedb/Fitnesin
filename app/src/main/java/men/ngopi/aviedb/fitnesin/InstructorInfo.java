@@ -20,7 +20,6 @@ public class InstructorInfo extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent i = new Intent(InstructorInfo.this, MainActivity.class);
-        startActivity(i);
+        finish();
     }
 }

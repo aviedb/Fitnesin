@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -16,8 +17,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //loading the default fragment
-        loadFragment(new Fitnesin());
+        if (savedInstanceState != null) {
+            Log.d("onRestoreInstanceState", "Restoring");
+
+            fragment = getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
+        } else {
+            //loading the default fragment
+            fragment = new Fitnesin();
+        }
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -28,18 +35,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (outState == null) {
-            getSupportFragmentManager().putFragment(outState, "myFragment", fragment);
-        }
+        Log.d("onSaveInstanceState", "Saving");
+        getSupportFragmentManager().putFragment(outState, "myFragment", fragment);
+
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            fragment = getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
-        }
     }
 
     @Override
