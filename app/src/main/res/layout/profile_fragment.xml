@@ -14,7 +14,8 @@
         android:gravity="center">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans"
             android:text="My Profile"
@@ -79,11 +80,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/google_sans"
                     android:text="About Me"
                     android:textColor="#424242"
-                    android:fontFamily="@font/google_sans"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="20dp"/>
+                    android:textSize="15sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -91,100 +92,100 @@
                     android:layout_marginBottom="10dp">
 
                     <android.support.design.widget.TextInputLayout
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
-                        app:boxCornerRadiusTopStart="7.5dp"
-                        app:boxCornerRadiusTopEnd="7.5dp"
-                        app:boxCornerRadiusBottomStart="7.5dp"
+                        android:layout_height="wrap_content"
                         app:boxCornerRadiusBottomEnd="7.5dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                        app:boxCornerRadiusBottomStart="7.5dp"
+                        app:boxCornerRadiusTopEnd="7.5dp"
+                        app:boxCornerRadiusTopStart="7.5dp">
 
                         <android.support.design.widget.TextInputEditText
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
-                            android:singleLine="true"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:fontFamily="@font/google_sans"
-                            android:text=" "
-                            android:hint="Gender"/>
+                            android:hint="Gender"
+                            android:singleLine="true"
+                            android:text=" " />
                     </android.support.design.widget.TextInputLayout>
 
                     <Spinner
-                        style="@style/GoogleSansFont"
                         android:id="@+id/genderSpinner"
-                        android:layout_height="wrap_content"
+                        style="@style/GoogleSansFont"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="3dp"
-                        android:layout_marginTop="2dp"/>
+                        android:layout_marginTop="2dp" />
 
                 </FrameLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxCornerRadiusTopStart="7.5dp"
-                    app:boxCornerRadiusTopEnd="7.5dp"
-                    app:boxCornerRadiusBottomStart="7.5dp"
-                    app:boxCornerRadiusBottomEnd="7.5dp"
                     android:layout_marginBottom="10dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                    app:boxCornerRadiusBottomEnd="7.5dp"
+                    app:boxCornerRadiusBottomStart="7.5dp"
+                    app:boxCornerRadiusTopEnd="7.5dp"
+                    app:boxCornerRadiusTopStart="7.5dp">
 
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/google_sans"
-                        android:textColor="#424242"
-                        android:text="Aug 6, 2000"
                         android:clickable="true"
+                        android:drawableEnd="@drawable/fa_calendar_alt"
                         android:enabled="false"
                         android:focusable="false"
+                        android:fontFamily="@font/google_sans"
+                        android:hint="Birthday"
                         android:inputType="date"
-                        android:drawableEnd="@drawable/fa_calendar_alt"
-                        android:hint="Birthday"/>
+                        android:text="Aug 6, 2000"
+                        android:textColor="#424242" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxCornerRadiusTopStart="7.5dp"
-                    app:boxCornerRadiusTopEnd="7.5dp"
-                    app:boxCornerRadiusBottomStart="7.5dp"
-                    app:boxCornerRadiusBottomEnd="7.5dp"
                     android:layout_marginBottom="10dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                    app:boxCornerRadiusBottomEnd="7.5dp"
+                    app:boxCornerRadiusBottomStart="7.5dp"
+                    app:boxCornerRadiusTopEnd="7.5dp"
+                    app:boxCornerRadiusTopStart="7.5dp">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/birthday"
-                        android:clickable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         android:fontFamily="@font/google_sans"
-                        android:textColor="#424242"
+                        android:hint="Weight (kg)"
                         android:inputType="number"
                         android:text="80"
-                        android:hint="Weight (kg)"/>
+                        android:textColor="#424242" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxCornerRadiusTopStart="7.5dp"
-                    app:boxCornerRadiusTopEnd="7.5dp"
-                    app:boxCornerRadiusBottomStart="7.5dp"
                     app:boxCornerRadiusBottomEnd="7.5dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                    app:boxCornerRadiusBottomStart="7.5dp"
+                    app:boxCornerRadiusTopEnd="7.5dp"
+                    app:boxCornerRadiusTopStart="7.5dp">
 
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/google_sans"
-                        android:textColor="#424242"
+                        android:hint="Height (cm)"
                         android:inputType="number"
                         android:text="170"
-                        android:hint="Height (cm)"/>
+                        android:textColor="#424242" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -200,6 +201,35 @@
                 android:layout_width="wrap_content"
                 android:textAllCaps="false"
                 android:text="Save"
+                android:layout_marginBottom="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D9D9D9"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Account"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="#424242"
+                android:fontFamily="@font/google_sans"
+                android:textSize="15sp"
+                android:layout_marginBottom="20dp"/>
+
+            <android.support.design.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_marginHorizontal="20dp"
+                android:id="@+id/logout"
+                app:backgroundTint="#c62828"
+                android:fontFamily="@font/google_sans"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textAllCaps="false"
+                android:text="Log out"
                 android:layout_marginBottom="10dp"/>
 
         </LinearLayout>
