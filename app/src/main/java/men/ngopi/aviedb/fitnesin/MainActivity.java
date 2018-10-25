@@ -9,8 +9,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
+import men.ngopi.aviedb.fitnesin.data.source.local.InstructorsLocalDataSource;
+import men.ngopi.aviedb.fitnesin.instructors.InstructorsFragment;
+import men.ngopi.aviedb.fitnesin.instructors.InstructorsPresenter;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     Fragment fragment;
+
+    private InstructorsFragment mInstructorsView;
+    private InstructorsPresenter mInstructorsPresenter;
+    private InstructorsDataSource mInstructorsDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+        // set up instructors data source
+        mInstructorsDataSource = InstructorsLocalDataSource.getInstance();
     }
 
     @Override
@@ -69,7 +81,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_find_instructor:
-                fragment = new FindInstructor();
+                if (mInstructorsView == null) {
+                    mInstructorsView = new InstructorsFragment();
+                    mInstructorsPresenter = new InstructorsPresenter(mInstructorsDataSource, mInstructorsView);
+                }
+                fragment = mInstructorsView;
                 break;
 
             case R.id.navigation_profile:

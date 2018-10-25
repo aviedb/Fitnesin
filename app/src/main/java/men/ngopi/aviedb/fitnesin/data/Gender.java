@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin.model;
+package men.ngopi.aviedb.fitnesin.data;
 
 public enum Gender {
     MALE,

@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin.adapter;
+package men.ngopi.aviedb.fitnesin.instructors;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +14,22 @@ import java.util.ArrayList;
 
 import men.ngopi.aviedb.fitnesin.InstructorInfo;
 import men.ngopi.aviedb.fitnesin.R; // Needed to import R. resource
-import men.ngopi.aviedb.fitnesin.model.Instructor;
+import men.ngopi.aviedb.fitnesin.data.Instructor;
 
 public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.InstructorViewHolder> {
 
     private ArrayList<Instructor> instructors;
 
+    public InstructorsAdapter() {
+        this.instructors = new ArrayList<>();
+    }
+
     public InstructorsAdapter(ArrayList<Instructor> instructors) {
         this.instructors = instructors;
+    }
+
+    public void addInstructors(ArrayList<Instructor> instructors) {
+        this.instructors.addAll(instructors);
     }
 
     @NonNull
