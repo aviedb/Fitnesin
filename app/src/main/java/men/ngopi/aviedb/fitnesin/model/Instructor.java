@@ -1,10 +1,12 @@
 package men.ngopi.aviedb.fitnesin.model;
 
+import android.graphics.drawable.Drawable;
+
 public class Instructor {
     private String name;
     private Gender gender;
     private String city;
-    private String photo;
+    private int photo;
 
     public Instructor(String name, Gender gender, String city) {
         this.name = name;
@@ -12,7 +14,7 @@ public class Instructor {
         this.city = city;
     }
 
-    public Instructor(String name, Gender gender, String city, String photo) {
+    public Instructor(String name, Gender gender, String city, int photo) {
         this.name = name;
         this.gender = gender;
         this.city = city;
@@ -31,7 +33,7 @@ public class Instructor {
         return city;
     }
 
-    public String getPhoto() {
+    public int getPhoto() {
         return photo;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import men.ngopi.aviedb.fitnesin.InstructorInfo;
 import men.ngopi.aviedb.fitnesin.R; // Needed to import R. resource
 import men.ngopi.aviedb.fitnesin.model.Instructor;
@@ -44,6 +45,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         instructorViewHolder.mNameTextView.setText(instructor.getName());
         instructorViewHolder.mGenderTextView.setText(instructor.getGender().toString());
         instructorViewHolder.mCityTextView.setText(instructor.getCity());
+        instructorViewHolder.mProfilePicture.setImageResource(instructor.getPhoto());
 
     }
 
@@ -59,6 +61,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         public TextView mNameTextView;
         public TextView mGenderTextView;
         public TextView mCityTextView;
+        public CircleImageView mProfilePicture;
 
         public InstructorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +71,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
             mNameTextView = itemView.findViewById(R.id.tv_instructor_name);
             mGenderTextView = itemView.findViewById(R.id.tv_instructor_gender);
             mCityTextView = itemView.findViewById(R.id.tv_instructor_city);
+            mProfilePicture = itemView.findViewById(R.id.profile_picture);
 
             // set click listener to current item card
             itemView.findViewById(R.id.cv_instructor).setOnClickListener(this);

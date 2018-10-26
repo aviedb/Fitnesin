@@ -1,6 +1,7 @@
 package men.ngopi.aviedb.fitnesin;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -40,12 +41,11 @@ public class FindInstructor extends Fragment implements View.OnClickListener {
         // init adapter
 
         ArrayList<Instructor> instructors = new ArrayList<>();
-        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang"));
-        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang"));
-        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang"));
+        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang", R.drawable.elon_musk));
+        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang", R.drawable.tony_stark));
+        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang", R.drawable.via_vallen));
         mInstructorsAdapter = new InstructorsAdapter(instructors);
         mInstructorsRecylerView.setAdapter(mInstructorsAdapter);
-
 
         return rootView;
     }
