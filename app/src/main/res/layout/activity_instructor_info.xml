@@ -75,7 +75,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/google_sans"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp"/>
+                android:textSize="20sp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -97,9 +97,9 @@
                 android:fontFamily="@font/google_sans"
                 android:text="Contact Info"
                 android:textColor="#424242"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -109,26 +109,33 @@
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:textColor="#424242"
-                    android:textSize="15dp"
+                    android:fontFamily="@font/google_sans"
+                    android:textSize="20dp"
                     android:text="Phone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans"
                     android:textColor="#424242"
-                    android:textSize="15dp"
+                    android:textSize="20dp"
+                    android:layout_marginStart="75dp"
                     android:text=":"/>
 
                 <TextView
                     android:id="@+id/phone_number"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="15dp"
+                    android:fontFamily="@font/google_sans"
+                    android:textSize="20dp"
                     android:gravity="end"
+                    android:clickable="true"
+                    android:layout_gravity="end"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:text="PHONE_NUMBER"/>
 
-            </LinearLayout>
+            </FrameLayout>
 
         </LinearLayout>
 
