@@ -41,9 +41,9 @@ public class FindInstructor extends Fragment implements View.OnClickListener {
         // init adapter
 
         ArrayList<Instructor> instructors = new ArrayList<>();
-        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang", R.drawable.elon_musk));
-        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang", R.drawable.tony_stark));
-        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang", R.drawable.via_vallen));
+        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang","+62 822 9220 9034",  R.drawable.elon_musk));
+        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang", "+62 822 1774 1234", R.drawable.tony_stark));
+        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang", "+62 822 8732 6666", R.drawable.via_vallen));
         mInstructorsAdapter = new InstructorsAdapter(instructors);
         mInstructorsRecylerView.setAdapter(mInstructorsAdapter);
 

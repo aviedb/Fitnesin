@@ -2,6 +2,8 @@ package men.ngopi.aviedb.fitnesin.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -43,9 +46,10 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         Instructor instructor = instructors.get(i);
 
         instructorViewHolder.mNameTextView.setText(instructor.getName());
-        instructorViewHolder.mGenderTextView.setText(instructor.getGender().toString());
+        instructorViewHolder.mGenderTextView.setText(instructor.getGender().toString().equals("MALE")? "Male":"Female");
         instructorViewHolder.mCityTextView.setText(instructor.getCity());
         instructorViewHolder.mProfilePicture.setImageResource(instructor.getPhoto());
+        instructorViewHolder.mPhone = instructor.getPhone();
 
     }
 
@@ -62,6 +66,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         public TextView mGenderTextView;
         public TextView mCityTextView;
         public CircleImageView mProfilePicture;
+        public String mPhone;
 
         public InstructorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,7 +85,14 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         @Override
         public void onClick(View view) {
             Log.d("onClick", "Clicking");
+
             Intent i = new Intent(this.context, InstructorInfo.class);
+            i.putExtra("INSTRUCTOR_NAME", mNameTextView.getText());
+            i.putExtra("GENDER", mGenderTextView.getText());
+            i.putExtra("CITY", mCityTextView.getText());
+            i.putExtra("PHONE_NUMBER", mPhone);
+
+
             this.context.startActivity(i);
         }
     }

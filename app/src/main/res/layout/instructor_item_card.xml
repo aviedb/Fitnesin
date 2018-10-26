@@ -52,6 +52,7 @@
                         android:id="@+id/tv_instructor_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
                         android:text="Male"
                         android:textStyle="italic" />
 
@@ -60,6 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawablePadding="1dp"
+                        android:fontFamily="@font/google_sans"
                         android:drawableStart="@drawable/ic_location_on_black_24dp"
                         android:text="Malang" />
 
