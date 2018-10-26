@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
+import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
@@ -14,9 +15,9 @@ public class InstructorsLocalDataSource implements InstructorsDataSource {
 
     private ArrayList<Instructor> instructors = new ArrayList<>();
     private InstructorsLocalDataSource() {
-        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang"));
-        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang"));
-        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang"));
+        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang","+62 822 9220 9034",  R.drawable.elon_musk));
+        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang", "+62 822 1774 1234", R.drawable.tony_stark));
+        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang", "+62 822 8732 6666", R.drawable.via_vallen));
     }
 
     public static InstructorsLocalDataSource getInstance() {
