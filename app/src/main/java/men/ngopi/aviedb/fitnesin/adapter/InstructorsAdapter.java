@@ -49,7 +49,8 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         instructorViewHolder.mGenderTextView.setText(instructor.getGender().toString().equals("MALE")? "Male":"Female");
         instructorViewHolder.mCityTextView.setText(instructor.getCity());
         instructorViewHolder.mProfilePicture.setImageResource(instructor.getPhoto());
-        instructorViewHolder.mPhone = instructor.getPhone();
+        instructorViewHolder.ppInt = instructor.getPhoto();
+        instructorViewHolder.phoneString = instructor.getPhone();
 
     }
 
@@ -66,7 +67,8 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         public TextView mGenderTextView;
         public TextView mCityTextView;
         public CircleImageView mProfilePicture;
-        public String mPhone;
+        public String phoneString;
+        public int ppInt;
 
         public InstructorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +92,8 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
             i.putExtra("INSTRUCTOR_NAME", mNameTextView.getText());
             i.putExtra("GENDER", mGenderTextView.getText());
             i.putExtra("CITY", mCityTextView.getText());
-            i.putExtra("PHONE_NUMBER", mPhone);
+            i.putExtra("PROFILE_PICTURE", ppInt);
+            i.putExtra("PHONE_NUMBER", phoneString);
 
 
             this.context.startActivity(i);

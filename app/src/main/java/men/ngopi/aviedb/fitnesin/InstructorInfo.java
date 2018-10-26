@@ -13,6 +13,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class InstructorInfo extends Activity implements View.OnClickListener {
     TextView tv, instructorName, location, phoneNumber;
+    CircleImageView profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class InstructorInfo extends Activity implements View.OnClickListener {
         instructorName = findViewById(R.id.instructor_name);
         location = findViewById(R.id.location);
         phoneNumber = findViewById(R.id.phone_number);
+        profilePicture = findViewById(R.id.profile_picture);
 
         Bundle extras = getIntent().getExtras();
 
@@ -29,6 +31,7 @@ public class InstructorInfo extends Activity implements View.OnClickListener {
             instructorName.setText(extras.getString("INSTRUCTOR_NAME"));
             location.setText(extras.getString("CITY"));
             phoneNumber.setText(extras.getString("PHONE_NUMBER"));
+            profilePicture.setImageResource(extras.getInt("PROFILE_PICTURE", 0));
 
             phoneNumber.setOnClickListener(this);
         }
