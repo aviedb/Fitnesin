@@ -7,12 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.local.InstructorsLocalDataSource;
 import men.ngopi.aviedb.fitnesin.instructors.InstructorsFragment;
 import men.ngopi.aviedb.fitnesin.instructors.InstructorsPresenter;
+import men.ngopi.aviedb.fitnesin.profile.ProfileFragment;
+import men.ngopi.aviedb.fitnesin.profile.ProfilePresenter;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     Fragment fragment;
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private InstructorsFragment mInstructorsView;
     private InstructorsPresenter mInstructorsPresenter;
     private InstructorsDataSource mInstructorsDataSource;
+
+    private ProfileFragment mProfileView;
+    private ProfilePresenter mProfilePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +93,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_profile:
-                fragment = new Profile();
+                if (mProfileView == null) {
+                    mProfileView = new ProfileFragment();
+                    mProfilePresenter = new ProfilePresenter(mProfileView);
+
+                }
+
+                fragment = mProfileView;
                 break;
         }
 
