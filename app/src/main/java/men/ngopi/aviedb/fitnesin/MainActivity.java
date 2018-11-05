@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
+import men.ngopi.aviedb.fitnesin.data.source.MembersDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.local.InstructorsLocalDataSource;
+import men.ngopi.aviedb.fitnesin.data.source.remote.MembersRemoteDataSource;
 import men.ngopi.aviedb.fitnesin.instructors.InstructorsFragment;
 import men.ngopi.aviedb.fitnesin.instructors.InstructorsPresenter;
 import men.ngopi.aviedb.fitnesin.profile.ProfileFragment;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private InstructorsFragment mInstructorsView;
     private InstructorsPresenter mInstructorsPresenter;
     private InstructorsDataSource mInstructorsDataSource;
+    private MembersDataSource mMembersDataSource;
 
     private ProfileFragment mProfileView;
     private ProfilePresenter mProfilePresenter;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // set up instructors data source
         mInstructorsDataSource = InstructorsLocalDataSource.getInstance();
+        mMembersDataSource = MembersRemoteDataSource.getInstance();
     }
 
     @Override
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.navigation_profile:
                 if (mProfileView == null) {
                     mProfileView = new ProfileFragment();
-                    mProfilePresenter = new ProfilePresenter(mProfileView);
+                    mProfilePresenter = new ProfilePresenter(mMembersDataSource, mProfileView);
 
                 }
 

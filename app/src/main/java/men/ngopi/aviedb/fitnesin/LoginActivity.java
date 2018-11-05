@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        MaterialButton mEmailSignInButton = (MaterialButton) findViewById(R.id.email_sign_in_button);
+        MaterialButton mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

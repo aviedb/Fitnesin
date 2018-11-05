@@ -4,12 +4,16 @@ import java.util.Calendar;
 
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import men.ngopi.aviedb.fitnesin.data.Member;
+import men.ngopi.aviedb.fitnesin.data.source.MembersDataSource;
 
 public class ProfilePresenter implements ProfileContract.Presenter {
 
+    private final MembersDataSource mMembersDataSource;
+
     private final ProfileContract.View mProfileView;
 
-    public ProfilePresenter(ProfileContract.View mProfileView) {
+    public ProfilePresenter(MembersDataSource membersDataSource, ProfileContract.View mProfileView) {
+        this.mMembersDataSource = membersDataSource;
         this.mProfileView = mProfileView;
 
         this.mProfileView.setPresenter(this);
@@ -28,5 +32,23 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void start() {
         this.loadProfile();
+    }
+
+    // from remote
+    @Override
+    public void loadProfile(String token) {
+
+        this.mMembersDataSource.getMe(token, new MembersDataSource.GetMemberCallback() {
+            @Override
+            public void onMemberLoaded(Member member) {
+                mProfileView.showProfile(member);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                loadProfile();
+            }
+        });
+
     }
 }

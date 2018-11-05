@@ -65,8 +65,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
-        Log.d("profileFragment", "token: "+ sharedPreferences.getString("token", "EMPTY"));
+        Log.d("profileFragment", "token: " + sharedPreferences.getString("token", "EMPTY"));
+        if (sharedPreferences.contains("token")) {
+            mPresenter.loadProfile(sharedPreferences.getString("token", null));
+        } else {
+            mPresenter.start();
+        }
     }
 
     @Override
