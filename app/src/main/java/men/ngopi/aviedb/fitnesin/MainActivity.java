@@ -16,6 +16,9 @@ import men.ngopi.aviedb.fitnesin.profile.ProfileFragment;
 import men.ngopi.aviedb.fitnesin.profile.ProfilePresenter;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+    public static final String SHARED_PREFERENCE = "pref";
+
     Fragment fragment;
 
     private InstructorsFragment mInstructorsView;

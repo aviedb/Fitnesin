@@ -1,6 +1,8 @@
 package men.ngopi.aviedb.fitnesin.profile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
@@ -13,12 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 
 import men.ngopi.aviedb.fitnesin.LoginActivity;
+import men.ngopi.aviedb.fitnesin.MainActivity;
 import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import men.ngopi.aviedb.fitnesin.data.Member;
@@ -33,6 +33,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     private TextInputEditText mMemberWeight;
     private TextInputEditText mMemberHeight;
     private MaterialButton logoutBtn;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +57,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         logoutBtn = rootView.findViewById(R.id.logout);
         logoutBtn.setOnClickListener(this);
 
+        sharedPreferences = rootView.getContext().getSharedPreferences(MainActivity.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+
         return rootView;
     }
 
@@ -62,6 +66,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     public void onResume() {
         super.onResume();
         mPresenter.start();
+        Log.d("profileFragment", "token: "+ sharedPreferences.getString("token", "EMPTY"));
     }
 
     @Override

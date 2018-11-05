@@ -1,48 +1,20 @@
 package men.ngopi.aviedb.fitnesin;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-
 import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.button.MaterialButton;
-import android.support.design.widget.TextInputEditText;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitError;
+import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
-import com.facebook.accountkit.AccountKitLoginResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
@@ -50,8 +22,6 @@ import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -61,6 +31,8 @@ public class LoginActivity extends Activity {
     public static int APP_REQUEST_CODE = 99;
 
     private FitnesinService.IFitnesinService fitnesinService = FitnesinService.getInstance().getService();
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +47,7 @@ public class LoginActivity extends Activity {
             }
         });
 
+        sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCE, MODE_PRIVATE);
     }
 
     private void attemptLogin() {
@@ -156,6 +129,9 @@ public class LoginActivity extends Activity {
                 Log.d("authMember", "code: " + response.code());
                 if(response.body() != null && response.body().getData() != null) {
                     Log.d("authMember", "token: " + response.body().getData().getToken());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("token",response.body().getData().getToken() );
+                    editor.commit();
                 }
             }
 
