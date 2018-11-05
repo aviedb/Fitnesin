@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fitnesin</string>
+    <string name="FACEBOOK_APP_ID">2392779204082764</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">6add788f03dcd84210c3176f73d58899</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

@@ -34,42 +34,6 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/email"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/google_sans"
-                    android:textColor="#424242"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/password"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/google_sans"
-                    android:textColor="#424242"/>
-
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.button.MaterialButton
                 android:id="@+id/email_sign_in_button"
@@ -77,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Sign in"
+                android:text="Sign in as Member"
                 android:textAllCaps="false"/>
 
         </LinearLayout>

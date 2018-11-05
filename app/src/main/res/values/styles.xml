@@ -20,4 +20,9 @@
         <item name="fontFamily">@font/google_sans</item>
     </style>
 
+    <!-- AccountKit theme -->
+    <style name="AppLoginTheme">
+
+    </style>
+
 </resources>
