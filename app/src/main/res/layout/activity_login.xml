@@ -44,6 +44,15 @@
                 android:text="Sign in as Member"
                 android:textAllCaps="false"/>
 
+            <android.support.design.button.MaterialButton
+                android:id="@+id/register_member_button"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Register as Member"
+                android:textAllCaps="false"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

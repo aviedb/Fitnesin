@@ -8,6 +8,7 @@ import men.ngopi.aviedb.fitnesin.data.MemberSerializer;
 import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
+import men.ngopi.aviedb.fitnesin.network.model.registerMember.RegisterMemberRequest;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -57,6 +58,9 @@ public class FitnesinService {
 
         @GET("members/me")
         Call<FetchMemberResponse> fetchMember(@Header("Authorization") String token);
+
+        @POST("register/member")
+        Call<FetchMemberResponse> registerMember(@Body RegisterMemberRequest request);
 
     }
 }
