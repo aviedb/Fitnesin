@@ -44,6 +44,7 @@ import com.facebook.accountkit.AccountKitLoginResult;
 import java.util.ArrayList;
 import java.util.List;
 
+import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
@@ -75,6 +76,19 @@ public class LoginActivity extends Activity {
             }
         });
 
+        MaterialButton mSignInInstructor = (MaterialButton) findViewById(R.id.sign_in_instructor);
+        mSignInInstructor.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                instructorLogin();
+            }
+        });
+
+    }
+
+    private void instructorLogin() {
+        final Intent i = new Intent(this, InstructorMainActivity.class);
+        startActivity(i);
     }
 
     private void attemptLogin() {
