@@ -17,8 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".InstructorEditInfo"
+            android:label="@string/title_activity_instructor_edit_info"></activity>
+        <activity
             android:name=".InstructorMainActivity"
-            android:label="@string/title_activity_instructor_main"></activity>
+            android:label="@string/title_activity_instructor_main" />
 
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
