@@ -18,6 +18,10 @@ import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
 
 import men.ngopi.aviedb.fitnesin.data.Member;
+import java.util.ArrayList;
+import java.util.List;
+
+import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
 import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
@@ -67,10 +71,22 @@ public class LoginActivity extends Activity {
         });
 
         sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCE, MODE_PRIVATE);
+        MaterialButton mSignInInstructor = (MaterialButton) findViewById(R.id.sign_in_instructor);
+        mSignInInstructor.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                instructorLogin();
+            }
+        });
+
     }
 
     private void attemptLoginAsMember() {
         verifyAccountKitPhone(AK_LOGIN_AS_MEMBER);
+    }
+    private void instructorLogin() {
+        final Intent i = new Intent(this, InstructorMainActivity.class);
+        startActivity(i);
     }
 
     private void onVerifyPhoneForLoginAsMember(String authCode) {
