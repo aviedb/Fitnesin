@@ -16,6 +16,8 @@ public interface ProfileContract {
 
         void loadProfile();
 
+        void loadProfile(String token);
+
     }
 
 }

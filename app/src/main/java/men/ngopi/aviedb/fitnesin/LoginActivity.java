@@ -1,81 +1,76 @@
 package men.ngopi.aviedb.fitnesin;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-
 import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.button.MaterialButton;
-import android.support.design.widget.TextInputEditText;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitError;
+import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
-import com.facebook.accountkit.AccountKitLoginResult;
 
+import men.ngopi.aviedb.fitnesin.data.Member;
 import java.util.ArrayList;
 import java.util.List;
 
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
+import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
+import men.ngopi.aviedb.fitnesin.network.model.registerMember.RegisterMemberRequest;
+import men.ngopi.aviedb.fitnesin.registerMember.RegisterMemberActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends Activity {
 
-    public static int APP_REQUEST_CODE = 99;
+    private static final int AK_LOGIN_AS_MEMBER = 99;
+    private static final int AK_REGISTER_AS_MEMBER = 100;
+    private static final int APP_REGISTER_AS_MEMBER = 200;
 
-    private FitnesinService.IFitnesinService fitnesinService = FitnesinService.getInstance().getService();
+    private final FitnesinService.IFitnesinService fitnesinService = FitnesinService.getInstance().getService();
+
+    private SharedPreferences sharedPreferences;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        MaterialButton mEmailSignInButton = (MaterialButton) findViewById(R.id.email_sign_in_button);
+        // Set context
+        context = this;
+
+        MaterialButton mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptLoginAsMember();
             }
         });
 
+        MaterialButton mRegisterAsMemberButton = findViewById(R.id.register_member_button);
+        mRegisterAsMemberButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptRegisterAsMember();
+            }
+        });
+
+        sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCE, MODE_PRIVATE);
         MaterialButton mSignInInstructor = (MaterialButton) findViewById(R.id.sign_in_instructor);
         mSignInInstructor.setOnClickListener(new OnClickListener() {
             @Override
@@ -86,23 +81,120 @@ public class LoginActivity extends Activity {
 
     }
 
+    private void attemptLoginAsMember() {
+        verifyAccountKitPhone(AK_LOGIN_AS_MEMBER);
+    }
     private void instructorLogin() {
         final Intent i = new Intent(this, InstructorMainActivity.class);
         startActivity(i);
     }
 
-    private void attemptLogin() {
+    private void onVerifyPhoneForLoginAsMember(String authCode) {
+        LoginRequest req = new LoginRequest();
+        req.setAuthCode(authCode);
 
+
+        fitnesinService.loginMember(req).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
+                Log.d("authMember", "response: " + response.toString());
+
+                Log.d("authMember", "isSuccessful: " + response.isSuccessful());
+                Log.d("authMember", "code: " + response.code());
+                if (response.body() != null && response.body().getData() != null) {
+                    LoginResponse.LoginData loginData = response.body().getData();
+                    Log.d("authMember", "token: " + loginData.getToken());
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(MainActivity.PREF_TOKEN_KEY, loginData.getToken());
+                    editor.putString(MainActivity.PREF_TOKEN_EXPIRY_KEY, loginData.getExpiry());
+                    editor.putBoolean(MainActivity.PREF_USERTOKEN_KEY, true);
+                    editor.apply();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.e("authMember", "failed");
+            }
+        });
+    }
+
+    private void attemptRegisterAsMember() {
+        verifyAccountKitPhone(AK_REGISTER_AS_MEMBER);
+//        onVerifyPhoneForRegisterAsMember("");
+    }
+
+    private void onVerifyPhoneForRegisterAsMember(String authCode) {
+
+        Intent intent = new Intent(this, RegisterMemberActivity.class);
+        intent.putExtra("akAuthCode", authCode);
+        startActivityForResult(intent, APP_REGISTER_AS_MEMBER);
+
+    }
+
+    private void onMemberRegisterActivityResult(final Intent data) {
+        Log.d("onMemberRegisterResult", "AkAuthCode: " + data.getStringExtra("akAuthCode"));
+        Log.d("onMemberRegisterResult", "Name: " + data.getStringExtra("name"));
+        Log.d("onMemberRegisterResult", "Birthdate: " + data.getStringExtra("birthdate"));
+        Log.d("onMemberRegisterResult", "Height: " + data.getDoubleExtra("height", -1));
+        Log.d("onMemberRegisterResult", "Weight: " + data.getDoubleExtra("weight", -1));
+        Log.d("onMemberRegisterResult", "Gender: " + data.getStringExtra("gender"));
+
+        RegisterMemberRequest req = new RegisterMemberRequest(
+                data.getStringExtra("akAuthCode"),
+                data.getStringExtra("name"),
+                data.getStringExtra("birthdate"),
+                data.getDoubleExtra("height", 1),
+                data.getDoubleExtra("weight", 1),
+                data.getStringExtra("gender")
+        );
+        fitnesinService.registerMember(req).enqueue(new Callback<FetchMemberResponse>() {
+            @Override
+            public void onResponse(Call<FetchMemberResponse> call, Response<FetchMemberResponse> response) {
+                if (!response.isSuccessful()) {
+                    showToast("Not successfull");
+                    return;
+                }
+                if (response.body() != null && response.body().getData() != null) {
+                    Member member = response.body().getData();
+                    Log.d("onRegisterMemberService", "Name: " + member.getName());
+                    Log.d("onRegisterMemberService", "Birthdate: " + member.getBirthdate().toString());
+                    Log.d("onRegisterMemberService", "Height: " + member.getHeight());
+                    Log.d("onRegisterMemberService", "Weight: " + member.getWeight());
+                    Log.d("onRegisterMemberService", "Gender: " + member.getGender().toString());
+                    showToast("Registration success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FetchMemberResponse> call, Throwable t) {
+                showToast("Registration Failed");
+            }
+        });
+    }
+
+    private void verifyAccountKitPhone(int intentRequestCode) {
         final Intent intent = new Intent(this, AccountKitActivity.class);
         AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
                 new AccountKitConfiguration.AccountKitConfigurationBuilder(
                         LoginType.PHONE,
-                        AccountKitActivity.ResponseType.CODE); // or .ResponseType.TOKEN
-        // ... perform additional configuration ...
+                        AccountKitActivity.ResponseType.CODE
+                );
+
         intent.putExtra(
                 AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
-                configurationBuilder.build());
-        startActivityForResult(intent, APP_REQUEST_CODE);
+                configurationBuilder.build()
+        );
+        startActivityForResult(intent, intentRequestCode);
+    }
+
+    private void showToast(String toastMessage) {
+        Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -114,70 +206,44 @@ public class LoginActivity extends Activity {
         Log.d("onActivityResult", "requestCode: " + requestCode);
         Log.d("onActivityResult", "resultCode: " + resultCode);
 
-        if (requestCode == APP_REQUEST_CODE) { // confirm that this response matches your request
-            AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
-            String toastMessage;
-            if (loginResult.getError() != null) {
-                toastMessage = loginResult.getError().getErrorType().getMessage();
-                showErrorActivity(loginResult.getError());
-            } else if (loginResult.wasCancelled()) {
-                toastMessage = "Login Cancelled";
-            } else {
-                if (loginResult.getAccessToken() != null) {
-                    toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
+        switch (requestCode) {
+            case APP_REGISTER_AS_MEMBER: {
+                if (resultCode == Activity.RESULT_OK)
+                    onMemberRegisterActivityResult(data);
+                break;
+            }
+            case AK_LOGIN_AS_MEMBER:
+            case AK_REGISTER_AS_MEMBER: {
+                // confirm that this response matches your request
+                AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
+                String toastMessage = null;
+                if (loginResult.getError() != null) {
+                    toastMessage = loginResult.getError().getErrorType().getMessage();
+                    showErrorActivity(loginResult.getError());
+                } else if (loginResult.wasCancelled()) {
+                    toastMessage = "Phone Verification Cancelled";
+                } else if (loginResult.getAuthorizationCode() != null) {
+                    String authCode = loginResult.getAuthorizationCode();
+                    if (requestCode == AK_LOGIN_AS_MEMBER)
+                        onVerifyPhoneForLoginAsMember(authCode);
+                    else if (requestCode == AK_REGISTER_AS_MEMBER)
+                        onVerifyPhoneForRegisterAsMember(authCode);
                 } else {
-                    toastMessage = String.format(
-                            "Success:%s...",
-                            loginResult.getAuthorizationCode().substring(0, 10));
-                    testAuth(loginResult.getAuthorizationCode());
+                    toastMessage = "Phone Verification Failed";
                 }
 
-                // If you have an authorization code, retrieve it from
-                // loginResult.getAuthorizationCode()
-                // and pass it to your server and exchange it for an access token.
-
-                // Success! Start your next activity...
-//                goToMyLoggedInActivity();
-//                Intent i = new Intent(this, MainActivity.class);
-//                startActivity(i);
+                // Show toast
+                if (toastMessage != null) {
+                    showToast(toastMessage);
+                }
             }
-
-            Log.d("onActivityResult", toastMessage);
-
-            // Surface the result to your user in an appropriate way.
-            Toast.makeText(
-                    this,
-                    toastMessage,
-                    Toast.LENGTH_LONG)
-                    .show();
         }
+
     }
 
     private void showErrorActivity(AccountKitError error) {
         Log.d("accountKitError", error.toString());
     }
 
-    private void testAuth(String authCode) {
-        LoginRequest req = new LoginRequest();
-        req.setAuthCode(authCode);
-        fitnesinService.loginMember(req).enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
-                Log.d("authMember", "response: " + response.toString());
-
-                Log.d("authMember", "isSuccessful: " + response.isSuccessful());
-                Log.d("authMember", "code: " + response.code());
-                if(response.body() != null && response.body().getData() != null) {
-                    Log.d("authMember", "token: " + response.body().getData().getToken());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.e("authMember", "failed");
-            }
-        });
-    }
 }
 
