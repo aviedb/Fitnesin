@@ -1,5 +1,7 @@
 package men.ngopi.aviedb.fitnesin;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,6 +22,8 @@ import men.ngopi.aviedb.fitnesin.profile.ProfilePresenter;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final String SHARED_PREFERENCE = "pref";
+    public static final String PREF_TOKEN_KEY = "token";
+    public static final String PREF_USERTOKEN_KEY = "token_for_member";
 
     Fragment fragment;
 
@@ -31,10 +35,33 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private ProfileFragment mProfileView;
     private ProfilePresenter mProfilePresenter;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialize Shared Preferences
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
+
+        // Check if user already login
+        String loginToken = sharedPreferences.getString(PREF_TOKEN_KEY, null);
+        if (loginToken == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        // TODO: check for token expiry date
+
+        if(!sharedPreferences.getBoolean(PREF_USERTOKEN_KEY, false)) {
+            // token is for instructor
+            // TODO: finish this activity and start InstructorActivity
+
+        }
+
 
         if (savedInstanceState != null) {
             Log.d("onRestoreInstanceState", "Restoring");

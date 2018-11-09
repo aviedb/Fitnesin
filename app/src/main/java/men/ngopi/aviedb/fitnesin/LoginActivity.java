@@ -1,6 +1,7 @@
 package men.ngopi.aviedb.fitnesin;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -40,11 +41,15 @@ public class LoginActivity extends Activity {
     private final FitnesinService.IFitnesinService fitnesinService = FitnesinService.getInstance().getService();
 
     private SharedPreferences sharedPreferences;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Set context
+        context = this;
 
         MaterialButton mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -72,6 +77,8 @@ public class LoginActivity extends Activity {
     private void onVerifyPhoneForLoginAsMember(String authCode) {
         LoginRequest req = new LoginRequest();
         req.setAuthCode(authCode);
+
+
         fitnesinService.loginMember(req).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -82,9 +89,15 @@ public class LoginActivity extends Activity {
                 Log.d("authMember", "code: " + response.code());
                 if (response.body() != null && response.body().getData() != null) {
                     Log.d("authMember", "token: " + response.body().getData().getToken());
+                    // TODO: add expiry date
+
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("token", response.body().getData().getToken());
+                    editor.putString(MainActivity.PREF_TOKEN_KEY, response.body().getData().getToken());
+                    editor.putBoolean(MainActivity.PREF_USERTOKEN_KEY, true);
                     editor.apply();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                    finish();
                 }
             }
 

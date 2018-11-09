@@ -75,8 +75,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
 
     @Override
     public void onClick(View v) {
+
+        // Clear credentials
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(MainActivity.PREF_TOKEN_KEY);
+        editor.remove(MainActivity.PREF_USERTOKEN_KEY);
+        editor.apply();
+
+        // Show LoginActivity
         Intent i = new Intent(getContext(), LoginActivity.class);
         startActivity(i);
+        getActivity().finish();
     }
 
     @Override
