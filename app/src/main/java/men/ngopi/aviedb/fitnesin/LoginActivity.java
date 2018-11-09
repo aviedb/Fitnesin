@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitError;
 import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
@@ -60,7 +59,7 @@ public class LoginActivity extends Activity {
         });
 
         MaterialButton mRegisterAsMemberButton = findViewById(R.id.register_member_button);
-        mRegisterAsMemberButton.setOnClickListener(new View.OnClickListener(){
+        mRegisterAsMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptRegisterAsMember();
@@ -88,11 +87,12 @@ public class LoginActivity extends Activity {
                 Log.d("authMember", "isSuccessful: " + response.isSuccessful());
                 Log.d("authMember", "code: " + response.code());
                 if (response.body() != null && response.body().getData() != null) {
-                    Log.d("authMember", "token: " + response.body().getData().getToken());
-                    // TODO: add expiry date
+                    LoginResponse.LoginData loginData = response.body().getData();
+                    Log.d("authMember", "token: " + loginData.getToken());
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MainActivity.PREF_TOKEN_KEY, response.body().getData().getToken());
+                    editor.putString(MainActivity.PREF_TOKEN_KEY, loginData.getToken());
+                    editor.putString(MainActivity.PREF_TOKEN_EXPIRY_KEY, loginData.getExpiry());
                     editor.putBoolean(MainActivity.PREF_USERTOKEN_KEY, true);
                     editor.apply();
                     Intent intent = new Intent(context, MainActivity.class);
@@ -136,12 +136,11 @@ public class LoginActivity extends Activity {
                 data.getDoubleExtra("height", 1),
                 data.getDoubleExtra("weight", 1),
                 data.getStringExtra("gender")
-                );
+        );
         fitnesinService.registerMember(req).enqueue(new Callback<FetchMemberResponse>() {
             @Override
             public void onResponse(Call<FetchMemberResponse> call, Response<FetchMemberResponse> response) {
-                if (!response.isSuccessful())
-                {
+                if (!response.isSuccessful()) {
                     showToast("Not successfull");
                     return;
                 }

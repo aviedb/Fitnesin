@@ -10,6 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.gson.internal.bind.util.ISO8601Utils;
+
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.util.Date;
+
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.MembersDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.local.InstructorsLocalDataSource;
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static final String SHARED_PREFERENCE = "pref";
     public static final String PREF_TOKEN_KEY = "token";
     public static final String PREF_USERTOKEN_KEY = "token_for_member";
+    public static final String PREF_TOKEN_EXPIRY_KEY = "token_expiry";
 
     Fragment fragment;
 
@@ -47,16 +54,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Check if user already login
         String loginToken = sharedPreferences.getString(PREF_TOKEN_KEY, null);
-        if (loginToken == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+        String tokenExpiry = sharedPreferences.getString(PREF_TOKEN_EXPIRY_KEY, null);
+        if (loginToken == null || tokenExpiry == null) {
+            showLogin();
             return;
         }
 
-        // TODO: check for token expiry date
+        // Check for token expiry
+        try {
+            Date date = ISO8601Utils.parse(tokenExpiry, new ParsePosition(0));
+            Date currentDate = new Date();
+            if (date.before(currentDate)) {
+                // Clear credentials
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove(PREF_TOKEN_KEY);
+                editor.remove(PREF_TOKEN_EXPIRY_KEY);
+                editor.remove(PREF_USERTOKEN_KEY);
+                editor.apply();
+                showLogin();
+                return;
+            }
+        } catch (ParseException ex) {
+            showLogin();
+            return;
+        }
 
-        if(!sharedPreferences.getBoolean(PREF_USERTOKEN_KEY, false)) {
+        if (!sharedPreferences.getBoolean(PREF_USERTOKEN_KEY, false)) {
             // token is for instructor
             // TODO: finish this activity and start InstructorActivity
 
@@ -150,6 +173,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             return true;
         }
         return false;
+    }
+
+    private void showLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
