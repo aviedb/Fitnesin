@@ -70,6 +70,14 @@ public class LoginActivity extends Activity {
             }
         });
 
+        MaterialButton mRegisterAsInstructorButton = findViewById(R.id.register_instructor_button);
+        mRegisterAsInstructorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptRegisterAsInstructor();
+            }
+        });
+
         sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCE, MODE_PRIVATE);
         MaterialButton mSignInInstructor = (MaterialButton) findViewById(R.id.sign_in_instructor);
         mSignInInstructor.setOnClickListener(new OnClickListener() {
@@ -127,6 +135,11 @@ public class LoginActivity extends Activity {
     private void attemptRegisterAsMember() {
         verifyAccountKitPhone(AK_REGISTER_AS_MEMBER);
 //        onVerifyPhoneForRegisterAsMember("");
+    }
+
+    private void attemptRegisterAsInstructor() {
+        Intent i = new Intent(this, RegisterMemberActivity.class);
+        startActivity(i);
     }
 
     private void onVerifyPhoneForRegisterAsMember(String authCode) {
