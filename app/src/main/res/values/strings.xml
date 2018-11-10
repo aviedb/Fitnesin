@@ -118,4 +118,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_instructor_edit_info">InstructorEditInfo</string>
+    <string name="title_activity_register_instructor">RegisterInstructorActivity</string>
 </resources>

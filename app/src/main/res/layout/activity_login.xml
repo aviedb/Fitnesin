@@ -50,6 +50,7 @@
                 <android.support.design.button.MaterialButton
                     android:id="@+id/email_sign_in_button"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:fontFamily="@font/google_sans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -60,6 +61,7 @@
                 <android.support.design.button.MaterialButton
                     android:id="@+id/sign_in_instructor"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:fontFamily="@font/google_sans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -86,6 +88,7 @@
                 <android.support.design.button.MaterialButton
                     android:id="@+id/register_member_button"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:fontFamily="@font/google_sans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -96,6 +99,7 @@
                 <android.support.design.button.MaterialButton
                     android:id="@+id/register_instructor_button"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:fontFamily="@font/google_sans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

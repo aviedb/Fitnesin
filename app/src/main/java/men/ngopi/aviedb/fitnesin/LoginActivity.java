@@ -133,12 +133,14 @@ public class LoginActivity extends Activity {
     }
 
     private void attemptRegisterAsMember() {
-        verifyAccountKitPhone(AK_REGISTER_AS_MEMBER);
-//        onVerifyPhoneForRegisterAsMember("");
+//        verifyAccountKitPhone(AK_REGISTER_AS_MEMBER);
+        onVerifyPhoneForRegisterAsMember("");
     }
 
     private void attemptRegisterAsInstructor() {
-        Intent i = new Intent(this, RegisterMemberActivity.class);
+        // TODO: Verify phone number first
+
+        Intent i = new Intent(this, RegisterInstructorActivity.class);
         startActivity(i);
     }
 
