@@ -4,14 +4,17 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -36,6 +39,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     private TextInputEditText mMemberWeight;
     private TextInputEditText mMemberHeight;
     private MaterialButton logoutBtn;
+    private MaterialButton saveBtn;
     private DatePickerDialog dpd;
 
     private SharedPreferences sharedPreferences;
@@ -53,13 +57,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         mMemberHeight = rootView.findViewById(R.id.ti_height);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(),
-                R.array.gender, android.R.layout.simple_spinner_item);
+                R.array.gender, R.layout.spinner_item);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mGenderSpinner.setAdapter(adapter);
 
         logoutBtn = rootView.findViewById(R.id.logout);
         logoutBtn.setOnClickListener(this);
+
+        saveBtn = rootView.findViewById(R.id.saveBtn);
+        saveBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Profile Saved", Snackbar.LENGTH_LONG).show();
+            }
+        });
 
         sharedPreferences = rootView.getContext().getSharedPreferences(MainActivity.SHARED_PREFERENCE, Context.MODE_PRIVATE);
 
