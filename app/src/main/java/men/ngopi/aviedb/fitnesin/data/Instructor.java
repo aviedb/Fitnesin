@@ -15,6 +15,13 @@ public class Instructor {
         this.city = city;
     }
 
+    public Instructor(String name, Gender gender, String city, String phone) {
+        this.name = name;
+        this.gender = gender;
+        this.city = city;
+        this.phone = phone;
+    }
+
     public Instructor(String name, Gender gender, String city, String phone, int photo) {
         this.name = name;
         this.gender = gender;

@@ -18,10 +18,7 @@ import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
 
 import men.ngopi.aviedb.fitnesin.data.Member;
-import java.util.ArrayList;
-import java.util.List;
 
-import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
 import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
@@ -39,6 +36,8 @@ public class LoginActivity extends Activity {
 
     private static final int AK_LOGIN_AS_MEMBER = 99;
     private static final int AK_REGISTER_AS_MEMBER = 100;
+    private static final int AK_LOGIN_AS_INSTRUCTOR = 101;
+    private static final int AK_REGISTER_AS_INSTRUCTOR = 102;
     private static final int APP_REGISTER_AS_MEMBER = 200;
 
     private final FitnesinService.IFitnesinService fitnesinService = FitnesinService.getInstance().getService();
@@ -79,11 +78,11 @@ public class LoginActivity extends Activity {
         });
 
         sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCE, MODE_PRIVATE);
-        MaterialButton mSignInInstructor = (MaterialButton) findViewById(R.id.sign_in_instructor);
+        MaterialButton mSignInInstructor = findViewById(R.id.sign_in_instructor);
         mSignInInstructor.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                instructorLogin();
+                attemptLoginAsInstructor();
             }
         });
 
@@ -92,9 +91,11 @@ public class LoginActivity extends Activity {
     private void attemptLoginAsMember() {
         verifyAccountKitPhone(AK_LOGIN_AS_MEMBER);
     }
-    private void instructorLogin() {
-        final Intent i = new Intent(this, InstructorMainActivity.class);
-        startActivity(i);
+
+    private void attemptLoginAsInstructor() {
+        verifyAccountKitPhone(AK_LOGIN_AS_INSTRUCTOR);
+//        final Intent i = new Intent(this, InstructorMainActivity.class);
+//        startActivity(i);
     }
 
     private void onVerifyPhoneForLoginAsMember(String authCode) {
@@ -107,18 +108,14 @@ public class LoginActivity extends Activity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                 Log.d("authMember", "response: " + response.toString());
-
                 Log.d("authMember", "isSuccessful: " + response.isSuccessful());
                 Log.d("authMember", "code: " + response.code());
                 if (response.body() != null && response.body().getData() != null) {
                     LoginResponse.LoginData loginData = response.body().getData();
                     Log.d("authMember", "token: " + loginData.getToken());
 
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MainActivity.PREF_TOKEN_KEY, loginData.getToken());
-                    editor.putString(MainActivity.PREF_TOKEN_EXPIRY_KEY, loginData.getExpiry());
-                    editor.putBoolean(MainActivity.PREF_USERTOKEN_KEY, true);
-                    editor.apply();
+                    setToken(loginData.getToken(), loginData.getExpiry(), true);
+
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
                     finish();
@@ -191,6 +188,36 @@ public class LoginActivity extends Activity {
         });
     }
 
+    private void onVerifyPhoneForLoginAsInstructor(String authCode) {
+        LoginRequest req = new LoginRequest();
+        req.setAuthCode(authCode);
+
+        fitnesinService.loginInstructor(req).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                Log.d("authInstructor", "response: " + response.toString());
+                Log.d("authInstructor", "isSuccessful: " + response.isSuccessful());
+                Log.d("authInstructor", "code: " + response.code());
+                if (response.body() != null && response.body().getData() != null) {
+                    LoginResponse.LoginData loginData = response.body().getData();
+                    Log.d("authInstructor", "token: " + loginData.getToken());
+
+                    setToken(loginData.getToken(), loginData.getExpiry(), false);
+
+
+                    Intent intent = new Intent(context, InstructorMainActivity.class);
+                    context.startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.e("authInstructor", "failed");
+            }
+        });
+    }
+
     private void verifyAccountKitPhone(int intentRequestCode) {
         final Intent intent = new Intent(this, AccountKitActivity.class);
         AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
@@ -226,7 +253,9 @@ public class LoginActivity extends Activity {
                 break;
             }
             case AK_LOGIN_AS_MEMBER:
-            case AK_REGISTER_AS_MEMBER: {
+            case AK_REGISTER_AS_MEMBER:
+            case AK_LOGIN_AS_INSTRUCTOR:
+            case AK_REGISTER_AS_INSTRUCTOR: {
                 // confirm that this response matches your request
                 AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
                 String toastMessage = null;
@@ -241,6 +270,8 @@ public class LoginActivity extends Activity {
                         onVerifyPhoneForLoginAsMember(authCode);
                     else if (requestCode == AK_REGISTER_AS_MEMBER)
                         onVerifyPhoneForRegisterAsMember(authCode);
+                    else if (requestCode == AK_LOGIN_AS_INSTRUCTOR)
+                        onVerifyPhoneForLoginAsInstructor(authCode);
                 } else {
                     toastMessage = "Phone Verification Failed";
                 }
@@ -256,6 +287,14 @@ public class LoginActivity extends Activity {
 
     private void showErrorActivity(AccountKitError error) {
         Log.d("accountKitError", error.toString());
+    }
+
+    private void setToken(String token, String expiry, boolean forMember) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(MainActivity.PREF_TOKEN_KEY, token);
+        editor.putString(MainActivity.PREF_TOKEN_EXPIRY_KEY, expiry);
+        editor.putBoolean(MainActivity.PREF_USERTOKEN_KEY, forMember);
+        editor.apply();
     }
 
 }

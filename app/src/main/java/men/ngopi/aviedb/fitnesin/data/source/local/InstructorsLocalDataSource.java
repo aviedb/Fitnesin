@@ -37,4 +37,9 @@ public class InstructorsLocalDataSource implements InstructorsDataSource {
     public void getInstructor(@NonNull String instructorId, @NonNull GetInstructorCallback callback) {
         callback.onInstructorLoaded(instructors.get(0));
     }
+
+    @Override
+    public void getMe(@NonNull GetInstructorCallback callback) {
+        callback.onInstructorLoaded(instructors.get(0));
+    }
 }

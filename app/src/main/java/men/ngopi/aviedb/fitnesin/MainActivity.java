@@ -81,8 +81,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (!sharedPreferences.getBoolean(PREF_USERTOKEN_KEY, false)) {
             // token is for instructor
-            // TODO: finish this activity and start InstructorActivity
-
+            // finish this activity and start InstructorActivity
+            Intent intent = new Intent(this, InstructorMainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
 

@@ -54,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="As Member"
+                    app:icon="@drawable/ic_person_black_24dp"
                     android:layout_weight="1"
                     android:textAllCaps="false"/>
 
@@ -64,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="As Instructor"
+                    app:icon="@drawable/ic_supervisor_24dp"
                     android:layout_weight="1"
                     android:textAllCaps="false"/>
 
@@ -90,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="As Member"
+                    app:icon="@drawable/ic_person_black_24dp"
                     android:layout_weight="1"
                     android:textAllCaps="false"/>
 
@@ -100,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="As Instructor"
+                    app:icon="@drawable/ic_supervisor_24dp"
                     android:layout_weight="1"
                     android:textAllCaps="false"/>
 
