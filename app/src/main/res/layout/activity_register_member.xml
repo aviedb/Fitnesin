@@ -25,8 +25,17 @@
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Complete Your Profile"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:fontFamily="@font/google_sans"
+                android:layout_marginBottom="16dp"/>
+
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/InputTextCustom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -44,16 +53,16 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/InputTextCustom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/ti_birthdate"
                     android:hint="Birthdate"
-                    android:inputType="text"
                     android:singleLine="true"
-                    android:maxLines="1"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/google_sans"
@@ -62,7 +71,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/InputTextCustom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -80,7 +89,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/InputTextCustom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -103,13 +112,9 @@
                 android:layout_marginBottom="10dp">
 
                 <android.support.design.widget.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    style="@style/InputTextCustom"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:boxCornerRadiusBottomEnd="7.5dp"
-                    app:boxCornerRadiusBottomStart="7.5dp"
-                    app:boxCornerRadiusTopEnd="7.5dp"
-                    app:boxCornerRadiusTopStart="7.5dp">
+                    android:layout_height="wrap_content">
 
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"

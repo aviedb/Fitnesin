@@ -34,32 +34,76 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign In"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:fontFamily="@font/google_sans"/>
 
-            <android.support.design.button.MaterialButton
-                android:id="@+id/email_sign_in_button"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/email_sign_in_button"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="As Member"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"/>
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/sign_in_instructor"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="As Instructor"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Sign in as Member"
-                android:textAllCaps="false"/>
+                android:text="Register"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:fontFamily="@font/google_sans"/>
 
-            <android.support.design.button.MaterialButton
-                android:id="@+id/register_member_button"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Register as Member"
-                android:textAllCaps="false"/>
+                android:orientation="horizontal">
 
-            <android.support.design.button.MaterialButton
-                android:id="@+id/sign_in_instructor"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sign in as Instructor"
-                android:textAllCaps="false"/>
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/register_member_button"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="As Member"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"/>
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/register_instructor_button"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="As Instructor"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

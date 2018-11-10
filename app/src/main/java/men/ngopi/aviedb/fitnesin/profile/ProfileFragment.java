@@ -1,5 +1,6 @@
 package men.ngopi.aviedb.fitnesin.profile;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import men.ngopi.aviedb.fitnesin.LoginActivity;
 import men.ngopi.aviedb.fitnesin.MainActivity;
@@ -33,6 +36,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     private TextInputEditText mMemberWeight;
     private TextInputEditText mMemberHeight;
     private MaterialButton logoutBtn;
+    private DatePickerDialog dpd;
 
     private SharedPreferences sharedPreferences;
 
@@ -58,6 +62,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         logoutBtn.setOnClickListener(this);
 
         sharedPreferences = rootView.getContext().getSharedPreferences(MainActivity.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+
+        Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR); // Initial year selection
+        int month = now.get(Calendar.MONTH); // Initial month selection
+        int day = now.get(Calendar.DAY_OF_MONTH); // Inital day selection
+
+        dpd = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                Calendar newBirthdate = Calendar.getInstance();
+                newBirthdate.set(mYear, mMonth, mDay);
+
+                SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+                mMemberBirthdate.setText(formatter.format(newBirthdate.getTime()));
+
+            }
+        },day,month,year);
+
+        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() + 60*60*1000);
+        dpd.updateDate(year, month, day);
+
+        mMemberBirthdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dpd.show();
+            }
+        });
 
         return rootView;
     }
@@ -101,9 +132,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
             mGenderSpinner.setSelection(1);
         }
 
-
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
         mMemberBirthdate.setText(formatter.format(member.getBirthdate().getTime()));
+        dpd.updateDate(member.getBirthdate().get(Calendar.YEAR), member.getBirthdate()
+                .get(Calendar.MONTH), member.getBirthdate().get(Calendar.DAY_OF_MONTH));
 
     }
 

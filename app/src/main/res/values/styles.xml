@@ -20,6 +20,13 @@
         <item name="fontFamily">@font/google_sans</item>
     </style>
 
+    <style name="InputTextCustom" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusBottomEnd">7.5dp</item>
+        <item name="boxCornerRadiusBottomStart">7.5dp</item>
+        <item name="boxCornerRadiusTopEnd">7.5dp</item>
+        <item name="boxCornerRadiusTopStart">7.5dp</item>
+    </style>
+
     <!-- AccountKit theme -->
     <style name="AppLoginTheme">
 

@@ -1,6 +1,7 @@
 package men.ngopi.aviedb.fitnesin.registerMember;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.button.MaterialButton;
@@ -10,7 +11,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Gender;
@@ -23,6 +29,8 @@ public class RegisterMemberActivity extends AppCompatActivity {
     private TextInputEditText mBirthdate;
     private TextInputEditText mWeight;
     private TextInputEditText mHeight;
+    private DatePickerDialog dpd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +56,32 @@ public class RegisterMemberActivity extends AppCompatActivity {
         mWeight = findViewById(R.id.ti_weight);
         mHeight = findViewById(R.id.ti_height);
 
-        // TODO: remove this
-        mBirthdate.setText("2000-01-01T00:00:00Z");
+        Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR); // Initial year selection
+        int month = now.get(Calendar.MONTH); // Initial month selection
+        int day = now.get(Calendar.DAY_OF_MONTH); // Inital day selection
+
+        dpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                Calendar newBirthdate = Calendar.getInstance();
+                newBirthdate.set(mYear, mMonth, mDay);
+
+                SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+                mBirthdate.setText(formatter.format(newBirthdate.getTime()));
+
+            }
+        },day,month,year);
+
+        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() + 60*60*1000);
+        dpd.updateDate(year, month, day);
+
+        mBirthdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dpd.show();
+            }
+        });
     }
 
     private boolean checkInputValues() {
