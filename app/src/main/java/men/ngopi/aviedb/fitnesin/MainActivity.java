@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // set up instructors data source
         mInstructorsDataSource = InstructorsLocalDataSource.getInstance();
-        mMembersDataSource = MembersRemoteDataSource.getInstance();
+        mMembersDataSource = MembersRemoteDataSource.getInstance(loginToken);
     }
 
     @Override

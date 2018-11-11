@@ -43,11 +43,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     private DatePickerDialog dpd;
 
     private SharedPreferences sharedPreferences;
+    private Calendar selectedBirthdate = Calendar.getInstance();
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
+        rootView = inflater.inflate(R.layout.profile_fragment, container, false);
 
         mMemberName = rootView.findViewById(R.id.tv_member_name);
         mMemberPhone = rootView.findViewById(R.id.tv_member_phone);
@@ -66,10 +68,47 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         logoutBtn.setOnClickListener(this);
 
         saveBtn = rootView.findViewById(R.id.saveBtn);
-        saveBtn.setOnClickListener(new View.OnClickListener(){
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Profile Saved", Snackbar.LENGTH_LONG).show();
+                Gender gender = mGenderSpinner.getSelectedItemPosition() == 0 ? Gender.MALE : Gender.FEMALE;
+
+                boolean isValid = true;
+                // check for invalid value
+//                String name = mMemberName.getText().toString();
+                String weight = mMemberWeight.getText().toString();
+                String height = mMemberHeight.getText().toString();
+
+                if (weight.length() == 0) {
+                    mMemberWeight.setError("Weight can't be empty");
+                    isValid = false;
+                }
+
+                if (height.length() == 0) {
+                    mMemberHeight.setError("Height can't be empty");
+                    isValid = false;
+                }
+
+                if (!isValid)
+                    return;
+
+                double weightVal = 0;
+                double heightVal = 0;
+
+                try {
+                    weightVal = Double.valueOf(weight);
+                    heightVal = Double.valueOf(height);
+                } catch (NumberFormatException ie) {
+                    Log.e(ProfileFragment.class.getSimpleName(), "Error when casting weight or height");
+                    Log.e(ProfileFragment.class.getSimpleName(), ie.getMessage());
+                }
+
+                mPresenter.saveProfile(
+                        gender,
+                        selectedBirthdate,
+                        weightVal,
+                        heightVal
+                );
             }
         });
 
@@ -83,16 +122,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         dpd = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
-                Calendar newBirthdate = Calendar.getInstance();
-                newBirthdate.set(mYear, mMonth, mDay);
+                // move newBirthdate to selectedBirthdate as its value will be shared
+                selectedBirthdate.set(mYear, mMonth, mDay);
 
                 SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-                mMemberBirthdate.setText(formatter.format(newBirthdate.getTime()));
+                mMemberBirthdate.setText(formatter.format(selectedBirthdate.getTime()));
 
             }
-        },day,month,year);
+        }, day, month, year);
 
-        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() + 60*60*1000);
+        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() + 60 * 60 * 1000);
         dpd.updateDate(year, month, day);
 
         mMemberBirthdate.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +188,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         dpd.updateDate(member.getBirthdate().get(Calendar.YEAR), member.getBirthdate()
                 .get(Calendar.MONTH), member.getBirthdate().get(Calendar.DAY_OF_MONTH));
 
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Snackbar.make(this.rootView, message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override

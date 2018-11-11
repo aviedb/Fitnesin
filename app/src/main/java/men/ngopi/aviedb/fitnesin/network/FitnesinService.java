@@ -66,6 +66,9 @@ public class FitnesinService {
         @GET("members/me")
         Call<FetchMemberResponse> fetchMember(@Header("Authorization") String token);
 
+        @PATCH("members/me")
+        Call<FetchMemberResponse> updateMeMember(@Header("Authorization") String token, @Body Member member);
+
         @POST("register/member")
         Call<FetchMemberResponse> registerMember(@Body RegisterMemberRequest request);
 
