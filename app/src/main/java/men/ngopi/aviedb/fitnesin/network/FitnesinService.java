@@ -9,7 +9,6 @@ import men.ngopi.aviedb.fitnesin.data.Member;
 import men.ngopi.aviedb.fitnesin.data.MemberSerializer;
 import men.ngopi.aviedb.fitnesin.network.model.ModelResponse;
 import men.ngopi.aviedb.fitnesin.network.model.ModelsResponse;
-import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
 import men.ngopi.aviedb.fitnesin.network.model.registerInstructor.RegisterInstructorRequest;
@@ -64,13 +63,13 @@ public class FitnesinService {
         Call<LoginResponse> loginMember(@Body LoginRequest request);
 
         @GET("members/me")
-        Call<FetchMemberResponse> fetchMember(@Header("Authorization") String token);
+        Call<ModelResponse<Member>> fetchMember(@Header("Authorization") String token);
 
         @PATCH("members/me")
-        Call<FetchMemberResponse> updateMeMember(@Header("Authorization") String token, @Body Member member);
+        Call<ModelResponse<Member>> updateMeMember(@Header("Authorization") String token, @Body Member member);
 
         @POST("register/member")
-        Call<FetchMemberResponse> registerMember(@Body RegisterMemberRequest request);
+        Call<ModelResponse<Member>> registerMember(@Body RegisterMemberRequest request);
 
         @POST("login/instructor")
         Call<LoginResponse> loginInstructor(@Body LoginRequest request);
