@@ -15,9 +15,12 @@ public class InstructorsLocalDataSource implements InstructorsDataSource {
 
     private ArrayList<Instructor> instructors = new ArrayList<>();
     private InstructorsLocalDataSource() {
-        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang","+62 822 9220 9034",  R.drawable.elon_musk));
-        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang", "+62 822 1774 1234", R.drawable.tony_stark));
-        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang", "+62 822 8732 6666", R.drawable.via_vallen));
+        instructors.add(new Instructor("Elon Musk", Gender.MALE, "Malang",
+                "+62 822 9220 9034",  R.drawable.elon_musk, 1971, 5, 28));
+        instructors.add(new Instructor("Tony Stark", Gender.MALE, "Malang",
+                "+62 822 1774 1234", R.drawable.tony_stark, 1970, 4, 29));
+        instructors.add(new Instructor("Via Vallen", Gender.FEMALE, "Malang",
+                "+62 822 8732 6666", R.drawable.via_vallen, 1991, 9, 1));
     }
 
     public static InstructorsLocalDataSource getInstance() {

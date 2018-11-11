@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import men.ngopi.aviedb.fitnesin.InstructorInfo;
@@ -58,6 +59,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         instructorViewHolder.mCityTextView.setText(instructor.getCity());
         instructorViewHolder.mProfilePicture.setImageResource(instructor.getPhoto());
         instructorViewHolder.ppInt = instructor.getPhoto();
+        instructorViewHolder.mBirthdate = instructor.getBirthdate();
         instructorViewHolder.phoneString = instructor.getPhone();
 
     }
@@ -76,6 +78,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         public TextView mCityTextView;
         public CircleImageView mProfilePicture;
         public String phoneString;
+        public Calendar mBirthdate;
         public int ppInt;
 
         public InstructorViewHolder(@NonNull View itemView) {
@@ -102,7 +105,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
             i.putExtra("CITY", mCityTextView.getText());
             i.putExtra("PROFILE_PICTURE", ppInt);
             i.putExtra("PHONE_NUMBER", phoneString);
-
+            i.putExtra("BIRTHDATE", mBirthdate);
 
             this.context.startActivity(i);
         }

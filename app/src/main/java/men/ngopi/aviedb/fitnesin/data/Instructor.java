@@ -9,8 +9,8 @@ public class Instructor {
     private Gender gender;
     private String city;
     private String phone;
-    private int photo;
     private Calendar birthdate;
+    private int photo;
 
     public Instructor(String name, Gender gender, String city) {
         this.name = name;
@@ -25,12 +25,16 @@ public class Instructor {
         this.phone = phone;
     }
 
-    public Instructor(String name, Gender gender, String city, String phone, int photo) {
+    public Instructor(String name, Gender gender, String city, String phone, int photo, int birthYear, int birthMonth, int birthDay) {
         this.name = name;
         this.gender = gender;
         this.city = city;
         this.photo = photo;
         this.phone = phone;
+
+        Calendar birthdate = Calendar.getInstance();
+        birthdate.set(birthYear, birthMonth, birthDay);
+        this.birthdate = birthdate;
     }
 
     public String getName() {
@@ -49,12 +53,12 @@ public class Instructor {
         return phone;
     }
 
-    public int getPhoto() {
-        return photo;
-    }
-
     public Calendar getBirthdate() {
         return birthdate;
+    }
+
+    public int getPhoto() {
+        return photo;
     }
 
     public void setName(String name) {

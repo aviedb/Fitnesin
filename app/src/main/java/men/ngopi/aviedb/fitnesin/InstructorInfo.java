@@ -9,10 +9,14 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class InstructorInfo extends Activity implements View.OnClickListener {
-    TextView tv, instructorName, location, phoneNumber;
+    TextView tv, instructorName, location, phoneNumber, gender, birthdate;
+    SimpleDateFormat formatter;
     CircleImageView profilePicture;
 
     @Override
@@ -23,7 +27,11 @@ public class InstructorInfo extends Activity implements View.OnClickListener {
         instructorName = findViewById(R.id.instructor_name);
         location = findViewById(R.id.location);
         phoneNumber = findViewById(R.id.phone_number);
+        gender = findViewById(R.id.ti_gender);
+        birthdate = findViewById(R.id.ti_birthdate);
         profilePicture = findViewById(R.id.profile_picture);
+
+        formatter = new SimpleDateFormat("MMM dd, yyyy");
 
         Bundle extras = getIntent().getExtras();
 
@@ -31,7 +39,12 @@ public class InstructorInfo extends Activity implements View.OnClickListener {
             instructorName.setText(extras.getString("INSTRUCTOR_NAME"));
             location.setText(extras.getString("CITY"));
             phoneNumber.setText(extras.getString("PHONE_NUMBER"));
+            gender.setText(extras.getString("GENDER"));
             profilePicture.setImageResource(extras.getInt("PROFILE_PICTURE", 0));
+
+            Calendar calBirthdate = (Calendar) extras.get("BIRTHDATE");
+            assert calBirthdate != null;
+            birthdate.setText(formatter.format(calBirthdate.getTime()));
 
             phoneNumber.setOnClickListener(this);
         }

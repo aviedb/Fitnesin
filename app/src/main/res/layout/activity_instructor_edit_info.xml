@@ -56,15 +56,11 @@
                 android:src="@drawable/elon_musk" />
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/InputTextCustom"
+                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="10dp"
-                app:boxCornerRadiusBottomEnd="7.5dp"
-                app:boxCornerRadiusBottomStart="7.5dp"
-                app:boxCornerRadiusTopEnd="7.5dp"
-                app:boxCornerRadiusTopStart="7.5dp">
+                android:layout_marginBottom="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/ti_name"
@@ -81,15 +77,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/InputTextCustom"
+                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="10dp"
-                app:boxCornerRadiusBottomEnd="7.5dp"
-                app:boxCornerRadiusBottomStart="7.5dp"
-                app:boxCornerRadiusTopEnd="7.5dp"
-                app:boxCornerRadiusTopStart="7.5dp">
+                android:layout_marginBottom="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/ti_phone"
@@ -105,15 +97,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/InputTextCustom"
+                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="10dp"
-                app:boxCornerRadiusBottomEnd="7.5dp"
-                app:boxCornerRadiusBottomStart="7.5dp"
-                app:boxCornerRadiusTopEnd="7.5dp"
-                app:boxCornerRadiusTopStart="7.5dp">
+                android:layout_marginBottom="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/ti_city"
@@ -128,6 +116,26 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                style="@style/InputTextCustom"
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/ti_birthdate"
+                    android:hint="Birthdate"
+                    android:singleLine="true"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans"
+                    android:textColor="#424242"/>
+
+            </android.support.design.widget.TextInputLayout>
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,13 +143,9 @@
                 android:layout_marginBottom="10dp">
 
                 <android.support.design.widget.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    style="@style/InputTextCustom"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:boxCornerRadiusBottomEnd="7.5dp"
-                    app:boxCornerRadiusBottomStart="7.5dp"
-                    app:boxCornerRadiusTopEnd="7.5dp"
-                    app:boxCornerRadiusTopStart="7.5dp">
+                    android:layout_height="wrap_content">
 
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
@@ -166,8 +170,8 @@
 
             <android.support.design.button.MaterialButton
                 android:id="@+id/saveBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:fontFamily="@font/google_sans"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="12dp"
                 android:text="Save"
