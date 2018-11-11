@@ -82,6 +82,25 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    style="@style/InputTextCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/ti_birthdate"
+                        android:hint="Birthdate"
+                        android:singleLine="true"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:textColor="#424242"/>
+
+                </android.support.design.widget.TextInputLayout>
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
