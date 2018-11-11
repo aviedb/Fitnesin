@@ -39,6 +39,7 @@ public class LoginActivity extends Activity {
     private static final int AK_LOGIN_AS_INSTRUCTOR = 101;
     private static final int AK_REGISTER_AS_INSTRUCTOR = 102;
     private static final int APP_REGISTER_AS_MEMBER = 200;
+    private static final int APP_REGISTER_AS_INSTRUCTOR = 201;
 
     private final FitnesinService.IFitnesinService fitnesinService = FitnesinService.getInstance().getService();
 
@@ -102,7 +103,7 @@ public class LoginActivity extends Activity {
         LoginRequest req = new LoginRequest();
         req.setAuthCode(authCode);
 
-
+        // TODO: Show loading (3)
         fitnesinService.loginMember(req).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -163,6 +164,7 @@ public class LoginActivity extends Activity {
                 data.getDoubleExtra("weight", 1),
                 data.getStringExtra("gender")
         );
+        // TODO: Show loading (2)
         fitnesinService.registerMember(req).enqueue(new Callback<FetchMemberResponse>() {
             @Override
             public void onResponse(Call<FetchMemberResponse> call, Response<FetchMemberResponse> response) {
@@ -192,6 +194,7 @@ public class LoginActivity extends Activity {
         LoginRequest req = new LoginRequest();
         req.setAuthCode(authCode);
 
+        // TODO: Show loading (1)
         fitnesinService.loginInstructor(req).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

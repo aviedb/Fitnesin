@@ -49,4 +49,16 @@ public class Instructor {
     public int getPhoto() {
         return photo;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 }

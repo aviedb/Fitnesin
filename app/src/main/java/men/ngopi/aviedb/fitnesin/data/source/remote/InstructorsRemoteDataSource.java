@@ -79,4 +79,23 @@ public class InstructorsRemoteDataSource implements InstructorsDataSource {
             }
         });
     }
+
+    @Override
+    public void saveMe(@NonNull Instructor instructor, @NonNull final GetInstructorCallback callback) {
+        service.updateMeInstructor(mToken, instructor).enqueue(new Callback<ModelResponse<Instructor>>() {
+            @Override
+            public void onResponse(Call<ModelResponse<Instructor>> call, Response<ModelResponse<Instructor>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getData() != null)
+                    callback.onInstructorLoaded(response.body().getData());
+                else
+                    callback.onDataNotAvailable();
+            }
+
+            @Override
+            public void onFailure(Call<ModelResponse<Instructor>> call, Throwable t) {
+                callback.onDataNotAvailable();
+            }
+        });
+
+    }
 }

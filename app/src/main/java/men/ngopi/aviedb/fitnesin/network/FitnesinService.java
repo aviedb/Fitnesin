@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public class FitnesinService {
@@ -75,6 +76,9 @@ public class FitnesinService {
 
         @GET("instructors")
         Call<ModelsResponse<Instructor>> fetchInstructors(@Header("Authorization") String token);
+
+        @PATCH("instructors/me")
+        Call<ModelResponse<Instructor>> updateMeInstructor(@Header("Authorization") String token, @Body Instructor instructor);
 
     }
 }

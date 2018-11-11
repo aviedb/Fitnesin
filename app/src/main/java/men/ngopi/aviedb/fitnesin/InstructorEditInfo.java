@@ -3,14 +3,18 @@ package men.ngopi.aviedb.fitnesin;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import men.ngopi.aviedb.fitnesin.data.Gender;
+
 public class InstructorEditInfo extends Activity implements View.OnClickListener {
     private TextView tv;
+    private MaterialButton mSaveButton;
     private TextInputEditText mName;
     private TextInputEditText mPhone;
     private TextInputEditText mCity;
@@ -30,6 +34,9 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
 
         tv = findViewById(R.id.back);
         tv.setOnClickListener(this);
+
+        mSaveButton = findViewById(R.id.saveBtn);
+        mSaveButton.setOnClickListener(this);
 
         mName = findViewById(R.id.ti_name);
         mPhone = findViewById(R.id.ti_phone);
@@ -57,6 +64,17 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
+        if (v.equals(tv)) {
+            setResult(Activity.RESULT_CANCELED);
+        } else if (v.equals(mSaveButton)) {
+            // TODO: check for invalid data
+            Intent data = new Intent();
+            data.putExtra("name", mName.getText().toString());
+            data.putExtra("city", mCity.getText().toString());
+            data.putExtra("gender", mGenderSpinner.getSelectedItemPosition() == 0 ? Gender.MALE.toString() : Gender.FEMALE.toString());
+            setResult(Activity.RESULT_OK, data);
+        }
         finish();
     }
 

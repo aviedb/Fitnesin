@@ -42,4 +42,10 @@ public class InstructorsLocalDataSource implements InstructorsDataSource {
     public void getMe(@NonNull GetInstructorCallback callback) {
         callback.onInstructorLoaded(instructors.get(0));
     }
+
+    @Override
+    public void saveMe(@NonNull final Instructor instructor, @NonNull GetInstructorCallback callback) {
+        instructors.add(instructor);
+        callback.onInstructorLoaded(instructor);
+    }
 }

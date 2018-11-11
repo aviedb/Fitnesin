@@ -29,4 +29,6 @@ public interface InstructorsDataSource {
     void getInstructor(@NonNull String instructorId, @NonNull GetInstructorCallback callback);
 
     void getMe(@NonNull GetInstructorCallback callback);
+
+    void saveMe(@NonNull Instructor instructor, @NonNull GetInstructorCallback callback);
 }

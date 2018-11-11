@@ -1,6 +1,7 @@
 package men.ngopi.aviedb.fitnesin;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,9 @@ import android.support.design.button.MaterialButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import men.ngopi.aviedb.fitnesin.data.Instructor;
@@ -15,6 +19,8 @@ import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.remote.InstructorsRemoteDataSource;
 
 public class InstructorMainActivity extends Activity implements View.OnClickListener {
+    private static int APP_EDIT_INSTRUCTOR = 300;
+
     private TextView mName;
     private TextView mPhone;
     private TextView mCity;
@@ -49,17 +55,10 @@ public class InstructorMainActivity extends Activity implements View.OnClickList
             return;
         }
         instructorsDataSource = InstructorsRemoteDataSource.getInstance(token);
-        instructorsDataSource.getMe(new InstructorsDataSource.GetInstructorCallback() {
-            @Override
-            public void onInstructorLoaded(Instructor instructor) {
-                showInstructor(instructor);
-            }
+        getData();
 
-            @Override
-            public void onDataNotAvailable() {
-                Log.d(InstructorMainActivity.class.getSimpleName(), "failed to fetch data");
-            }
-        });
+        // TODO: add delete instructor button
+        // TODO: implement MVP pattern
     }
 
     @Override
@@ -72,10 +71,61 @@ public class InstructorMainActivity extends Activity implements View.OnClickList
                 i.putExtra("gender", instructor.getGender().toString());
                 i.putExtra("city", instructor.getCity());
             }
-            startActivity(i);
+            startActivityForResult(i, APP_EDIT_INSTRUCTOR);
         } else if (v.equals(logoutBtn)) {
             logout();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == APP_EDIT_INSTRUCTOR && resultCode == Activity.RESULT_OK) {
+            String name = data.getStringExtra("name");
+            String city = data.getStringExtra("city");
+            String gender = data.getStringExtra("gender");
+            if (name != null)
+                instructor.setName(name);
+            if (city != null)
+                instructor.setCity(city);
+
+            if (gender != null)
+                instructor.setGender(Gender.valueOf(gender.toUpperCase()));
+
+            final Context ctx = this;
+
+            // TODO: add loading indicator (1)
+            instructorsDataSource.saveMe(instructor, new InstructorsDataSource.GetInstructorCallback() {
+                @Override
+                public void onInstructorLoaded(Instructor instructor) {
+                    Toast.makeText(ctx, "Data successfully saved", Toast.LENGTH_LONG).show();
+                    getData();
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    Toast.makeText(ctx, "Unable to save data", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    private void getData() {
+        // TODO : add loading indicator (2)
+        final Context ctx = this;
+        instructorsDataSource.getMe(new InstructorsDataSource.GetInstructorCallback() {
+            @Override
+            public void onInstructorLoaded(Instructor instructor) {
+                showInstructor(instructor);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                Toast.makeText(ctx, "Unable to fetch data, please try again", Toast.LENGTH_LONG).show();
+                Log.d(InstructorMainActivity.class.getSimpleName(), "failed to fetch data");
+            }
+        });
     }
 
     private void showInstructor(Instructor instructor) {
