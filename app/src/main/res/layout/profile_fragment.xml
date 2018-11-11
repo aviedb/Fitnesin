@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans"
             android:text="My Profile"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textColor="#424242"
             android:gravity="center"/>
 
@@ -48,8 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Muhammad Avied Bachmid"
-                android:textSize="25sp"
-                android:layout_marginTop="10dp"
+                android:textSize="24sp"
+                android:layout_marginTop="12dp"
                 android:textColor="#424242"
                 android:drawableEnd="@drawable/ic_edit_black_24dp"
                 android:drawablePadding="5dp"
@@ -70,14 +70,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#D9D9D9"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginVertical="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="20dp">
+                android:paddingHorizontal="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -86,12 +85,12 @@
                     android:fontFamily="@font/google_sans"
                     android:text="About Me"
                     android:textColor="#424242"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="12dp">
 
                     <android.support.design.widget.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -128,7 +127,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="12dp"
                     app:boxCornerRadiusBottomEnd="7.5dp"
                     app:boxCornerRadiusBottomStart="7.5dp"
                     app:boxCornerRadiusTopEnd="7.5dp"
@@ -151,7 +150,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="12dp"
                     app:boxCornerRadiusBottomEnd="7.5dp"
                     app:boxCornerRadiusBottomStart="7.5dp"
                     app:boxCornerRadiusTopEnd="7.5dp"
@@ -195,8 +194,8 @@
 
             <android.support.design.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
                 android:id="@+id/saveBtn"
                 android:fontFamily="@font/google_sans"
                 android:layout_height="wrap_content"
@@ -209,18 +208,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#D9D9D9"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginVertical="16dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Account"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="16dp"
                 android:textColor="#424242"
                 android:fontFamily="@font/google_sans"
-                android:textSize="15sp"
-                android:layout_marginBottom="20dp"/>
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
 
             <android.support.design.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
@@ -232,7 +230,7 @@
                 android:layout_width="match_parent"
                 android:textAllCaps="false"
                 android:text="Log out"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="12dp"/>
 
         </LinearLayout>
 
