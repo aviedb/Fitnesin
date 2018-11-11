@@ -1,16 +1,22 @@
 package men.ngopi.aviedb.fitnesin;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.button.MaterialButton;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import java.text.SimpleDateFormat;
@@ -24,6 +30,7 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
     private TextInputEditText mCity;
     private Spinner mGenderSpinner;
     private TextInputEditText mBirthdate;
+    private MaterialButton mDeleteAccount;
     private DatePickerDialog dpd;
     SimpleDateFormat formatter;
 
@@ -48,6 +55,9 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
         mName = findViewById(R.id.ti_name);
         mPhone = findViewById(R.id.ti_phone);
         mCity = findViewById(R.id.ti_city);
+        mDeleteAccount = findViewById(R.id.delete_account);
+
+        mDeleteAccount.setOnClickListener(this);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -114,8 +124,33 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
             data.putExtra("city", mCity.getText().toString());
             data.putExtra("gender", mGenderSpinner.getSelectedItemPosition() == 0 ? Gender.MALE.toString() : Gender.FEMALE.toString());
             setResult(Activity.RESULT_OK, data);
+        } else if (v.equals(mDeleteAccount)) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage("Are you sure you want to delete your account?");
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // TODO: Delete account
+                            Toast.makeText(InstructorEditInfo.this, "Account Deleted [NOT REALLY]", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
         }
-        finish();
+//        finish();
     }
 
 }
