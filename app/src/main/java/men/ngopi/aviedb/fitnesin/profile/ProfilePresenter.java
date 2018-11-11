@@ -23,23 +23,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void loadProfile() {
-
-        Calendar birthdate = Calendar.getInstance();
-
-        // NOTE: Month start from 0 (January)
-        birthdate.set(2000, 7, 6);
-        this.mProfileView.showProfile(new Member("Muhammad Avied Bachmid", "+62 822 9221 2073", birthdate, 60, 160, Gender.MALE));
-    }
-
-    @Override
-    public void start() {
-        this.loadProfile();
-    }
-
-    // from remote
-    @Override
-    public void loadProfile(String token) {
-
         this.mMembersDataSource.getMe(new MembersDataSource.GetMemberCallback() {
             @Override
             public void onMemberLoaded(Member member) {
@@ -49,10 +32,14 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                loadProfile();
+                mProfileView.showMessage("Unable to fetch data from server");
             }
         });
+    }
 
+    @Override
+    public void start() {
+        this.loadProfile();
     }
 
     @Override
