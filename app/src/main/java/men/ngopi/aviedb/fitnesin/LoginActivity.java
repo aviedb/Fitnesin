@@ -17,12 +17,15 @@ import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
 
+import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.data.Member;
 
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
+import men.ngopi.aviedb.fitnesin.network.model.ModelResponse;
 import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
+import men.ngopi.aviedb.fitnesin.network.model.registerInstructor.RegisterInstructorRequest;
 import men.ngopi.aviedb.fitnesin.network.model.registerMember.RegisterMemberRequest;
 import men.ngopi.aviedb.fitnesin.registerMember.RegisterMemberActivity;
 import retrofit2.Call;
@@ -137,9 +140,9 @@ public class LoginActivity extends Activity {
 
     private void attemptRegisterAsInstructor() {
         // TODO: Verify phone number first
-
-        Intent i = new Intent(this, RegisterInstructorActivity.class);
-        startActivity(i);
+        verifyAccountKitPhone(AK_REGISTER_AS_INSTRUCTOR);
+//        Intent i = new Intent(this, RegisterInstructorActivity.class);
+//        startActivity(i);
     }
 
     private void onVerifyPhoneForRegisterAsMember(String authCode) {
@@ -148,6 +151,12 @@ public class LoginActivity extends Activity {
         intent.putExtra("akAuthCode", authCode);
         startActivityForResult(intent, APP_REGISTER_AS_MEMBER);
 
+    }
+
+    private void onVerifyPhoneForRegisterAsInstructor(String authCode) {
+        Intent intent = new Intent(this, RegisterInstructorActivity.class);
+        intent.putExtra("akAuthCode", authCode);
+        startActivityForResult(intent, APP_REGISTER_AS_INSTRUCTOR);
     }
 
     private void onMemberRegisterActivityResult(final Intent data) {
@@ -190,6 +199,46 @@ public class LoginActivity extends Activity {
                 showToast("Registration Failed");
             }
         });
+    }
+
+    private void onInstructorRegisterActivityResult(final Intent data) {
+        Log.d("InstructorRegister", "AkAuthCode: " + data.getStringExtra("akAuthCode"));
+        Log.d("InstructorRegister", "Name: " + data.getStringExtra("name"));
+        Log.d("InstructorRegister", "City: " + data.getStringExtra("city"));
+        Log.d("InstructorRegister", "Gender: " + data.getStringExtra("gender"));
+        // TODO: kurang birthdate
+        RegisterInstructorRequest req = new RegisterInstructorRequest(
+                data.getStringExtra("akAuthCode"),
+                data.getStringExtra("name"),
+                data.getStringExtra("city"),
+                data.getStringExtra("gender"),
+                "1999-01-01T00:00:00Z"
+        );
+
+        // TODO: Show loading (4)
+        fitnesinService.registerInstructor(req).enqueue(new Callback<ModelResponse<Instructor>>() {
+            @Override
+            public void onResponse(Call<ModelResponse<Instructor>> call, Response<ModelResponse<Instructor>> response) {
+                if (!response.isSuccessful()) {
+                    showToast("Instructor Registration Not successfull");
+                    return;
+                }
+                if (response.body() != null && response.body().getData() != null) {
+                    Instructor instructor = response.body().getData();
+                    Log.d("onRegisterMemberService", "Name: " + instructor.getName());
+                    Log.d("onRegisterMemberService", "City: " + instructor.getCity());
+                    Log.d("onRegisterMemberService", "Phone: " + instructor.getPhone());
+                    Log.d("onRegisterMemberService", "Gender: " + instructor.getGender().toString());
+                    showToast("Instructor Registration success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ModelResponse<Instructor>> call, Throwable t) {
+                showToast("Instructor Registration Failed");
+            }
+        });
+
     }
 
     private void onVerifyPhoneForLoginAsInstructor(String authCode) {
@@ -257,6 +306,11 @@ public class LoginActivity extends Activity {
                     onMemberRegisterActivityResult(data);
                 break;
             }
+            case APP_REGISTER_AS_INSTRUCTOR: {
+                if (resultCode == Activity.RESULT_OK)
+                    onInstructorRegisterActivityResult(data);
+                break;
+            }
             case AK_LOGIN_AS_MEMBER:
             case AK_REGISTER_AS_MEMBER:
             case AK_LOGIN_AS_INSTRUCTOR:
@@ -277,6 +331,8 @@ public class LoginActivity extends Activity {
                         onVerifyPhoneForRegisterAsMember(authCode);
                     else if (requestCode == AK_LOGIN_AS_INSTRUCTOR)
                         onVerifyPhoneForLoginAsInstructor(authCode);
+                    else if (requestCode == AK_REGISTER_AS_INSTRUCTOR)
+                        onVerifyPhoneForRegisterAsInstructor(authCode);
                 } else {
                     toastMessage = "Phone Verification Failed";
                 }

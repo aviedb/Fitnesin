@@ -2,12 +2,15 @@ package men.ngopi.aviedb.fitnesin.data;
 
 import android.graphics.drawable.Drawable;
 
+import java.util.Calendar;
+
 public class Instructor {
     private String name;
     private Gender gender;
     private String city;
     private String phone;
     private int photo;
+    private Calendar birthdate;
 
     public Instructor(String name, Gender gender, String city) {
         this.name = name;
@@ -50,6 +53,10 @@ public class Instructor {
         return photo;
     }
 
+    public Calendar getBirthdate() {
+        return birthdate;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -60,5 +67,9 @@ public class Instructor {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public void setBirthdate(Calendar birthdate) {
+        this.birthdate = birthdate;
     }
 }

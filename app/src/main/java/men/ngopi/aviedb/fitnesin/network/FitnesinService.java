@@ -12,6 +12,7 @@ import men.ngopi.aviedb.fitnesin.network.model.ModelsResponse;
 import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
+import men.ngopi.aviedb.fitnesin.network.model.registerInstructor.RegisterInstructorRequest;
 import men.ngopi.aviedb.fitnesin.network.model.registerMember.RegisterMemberRequest;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -70,6 +71,9 @@ public class FitnesinService {
 
         @POST("login/instructor")
         Call<LoginResponse> loginInstructor(@Body LoginRequest request);
+
+        @POST("register/instructor")
+        Call<ModelResponse<Instructor>> registerInstructor(@Body RegisterInstructorRequest request);
 
         @GET("instructors/me")
         Call<ModelResponse<Instructor>> fetchInstructorAsMe(@Header("Authorization") String token);

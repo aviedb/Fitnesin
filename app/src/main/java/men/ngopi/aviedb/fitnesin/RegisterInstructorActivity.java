@@ -63,8 +63,7 @@ public class RegisterInstructorActivity extends Activity {
     }
 
     private void finishThisActivity() {
-        // TODO: check for empty / invalid input
-
+        // check for empty / invalid input
         if (!checkInputValues())
             return;
 
@@ -73,7 +72,7 @@ public class RegisterInstructorActivity extends Activity {
         Intent data = new Intent();
         data.putExtra("akAuthCode", this.getIntent().getStringExtra("akAuthCode"));
         data.putExtra("name", mName.getText().toString());
-        data.putExtra("location", mLocation.getText().toString());
+        data.putExtra("city", mLocation.getText().toString());
         data.putExtra("gender", selectedGender.toString().toLowerCase());
 
         setResult(Activity.RESULT_OK, data);
