@@ -40,8 +40,8 @@ public class RegisterMemberActivity extends AppCompatActivity {
         // Setup UI
         mGenderSpinner = findViewById(R.id.genderSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.gender, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.gender, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mGenderSpinner.setAdapter(adapter);
 
         mSubmitRegisterButton = findViewById(R.id.submit_register_button);

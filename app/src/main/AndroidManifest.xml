@@ -17,8 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".RegisterInstructorActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:label="@string/title_activity_register_instructor"></activity>
+        <activity
             android:name=".InstructorEditInfo"
-            android:label="@string/title_activity_instructor_edit_info"></activity>
+            android:label="@string/title_activity_instructor_edit_info" />
         <activity
             android:name=".InstructorMainActivity"
             android:label="@string/title_activity_instructor_main" />
@@ -39,15 +43,14 @@
         <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-            <!--android:noHistory="true"-->
-            <!--android:excludeFromRecents="true"-->
-
+            android:label="@string/title_activity_login" /> <!-- android:noHistory="true" -->
+        <!-- android:excludeFromRecents="true" -->
         <activity
             android:name=".InstructorInfo"
             android:label="@string/title_activity_instructor_info" />
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +58,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registerMember.RegisterMemberActivity"></activity>
+        <activity
+            android:name=".registerMember.RegisterMemberActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
