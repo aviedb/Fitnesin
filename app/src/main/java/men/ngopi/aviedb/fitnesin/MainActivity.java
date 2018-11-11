@@ -19,6 +19,7 @@ import java.util.Date;
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.MembersDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.local.InstructorsLocalDataSource;
+import men.ngopi.aviedb.fitnesin.data.source.remote.InstructorsRemoteDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.remote.MembersRemoteDataSource;
 import men.ngopi.aviedb.fitnesin.instructors.InstructorsFragment;
 import men.ngopi.aviedb.fitnesin.instructors.InstructorsPresenter;
@@ -81,8 +82,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (!sharedPreferences.getBoolean(PREF_USERTOKEN_KEY, false)) {
             // token is for instructor
-            // TODO: finish this activity and start InstructorActivity
-
+            // finish this activity and start InstructorActivity
+            Intent intent = new Intent(this, InstructorMainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
 
@@ -100,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navigation.setOnNavigationItemSelectedListener(this);
 
         // set up instructors data source
-        mInstructorsDataSource = InstructorsLocalDataSource.getInstance();
-        mMembersDataSource = MembersRemoteDataSource.getInstance();
+        mInstructorsDataSource = InstructorsRemoteDataSource.getInstance("");
+        mMembersDataSource = MembersRemoteDataSource.getInstance(loginToken);
     }
 
     @Override

@@ -17,6 +17,8 @@ public interface MembersDataSource {
 
     }
 
-    void getMe(@NonNull String token, @NonNull GetMemberCallback callback);
+    void getMe(@NonNull GetMemberCallback callback);
+
+    void saveMe(@NonNull Member member, @NonNull GetMemberCallback callback);
 
 }

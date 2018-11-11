@@ -12,6 +12,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     private final ProfileContract.View mProfileView;
 
+    private Member mMember;
+
     public ProfilePresenter(MembersDataSource membersDataSource, ProfileContract.View mProfileView) {
         this.mMembersDataSource = membersDataSource;
         this.mProfileView = mProfileView;
@@ -38,15 +40,43 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void loadProfile(String token) {
 
-        this.mMembersDataSource.getMe(token, new MembersDataSource.GetMemberCallback() {
+        this.mMembersDataSource.getMe(new MembersDataSource.GetMemberCallback() {
             @Override
             public void onMemberLoaded(Member member) {
+                mMember = member;
                 mProfileView.showProfile(member);
             }
 
             @Override
             public void onDataNotAvailable() {
                 loadProfile();
+            }
+        });
+
+    }
+
+    @Override
+    public void saveProfile(Gender gender, Calendar birthdate, double weight, double height) {
+        Member updatedMember = new Member(
+                mMember.getName(),
+                mMember.getPhone(),
+                birthdate,
+                weight,
+                height,
+                gender
+        );
+
+        this.mMembersDataSource.saveMe(updatedMember, new MembersDataSource.GetMemberCallback() {
+            @Override
+            public void onMemberLoaded(Member member) {
+                mMember = member;
+                mProfileView.showProfile(mMember);
+                mProfileView.showMessage("Profile Saved");
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                mProfileView.showMessage("Unable to update member");
             }
         });
 

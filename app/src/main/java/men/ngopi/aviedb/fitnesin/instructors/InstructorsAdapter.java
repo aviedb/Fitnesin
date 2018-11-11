@@ -57,8 +57,9 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         instructorViewHolder.mNameTextView.setText(instructor.getName());
         instructorViewHolder.mGenderTextView.setText(instructor.getGender().toString().equals("MALE")? "Male":"Female");
         instructorViewHolder.mCityTextView.setText(instructor.getCity());
-        instructorViewHolder.mProfilePicture.setImageResource(instructor.getPhoto());
-        instructorViewHolder.ppInt = instructor.getPhoto();
+        // TODO: use real photo
+        instructorViewHolder.ppInt = instructor.getPhoto() == 0 ? R.drawable.elon_musk : instructor.getPhoto();
+        instructorViewHolder.mProfilePicture.setImageResource(instructorViewHolder.ppInt);
         instructorViewHolder.mBirthdate = instructor.getBirthdate();
         instructorViewHolder.phoneString = instructor.getPhone();
 
