@@ -85,6 +85,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
 //                String name = mMemberName.getText().toString();
                 String weight = mMemberWeight.getText().toString();
                 String height = mMemberHeight.getText().toString();
+                String name = mMemberName.getText().toString();
 
                 if (weight.length() == 0) {
                     mMemberWeight.setError("Weight can't be empty");
@@ -111,6 +112,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
                 }
 
                 mPresenter.saveProfile(
+                        name,
                         gender,
                         selectedBirthdate,
                         weightVal,

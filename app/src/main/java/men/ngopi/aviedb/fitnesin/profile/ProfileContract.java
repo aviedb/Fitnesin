@@ -23,7 +23,7 @@ public interface ProfileContract {
 
         void loadProfile(String token);
 
-        void saveProfile(Gender gender, Calendar birthdate, double height, double weight);
+        void saveProfile(String name, Gender gender, Calendar birthdate, double height, double weight);
 
     }
 
