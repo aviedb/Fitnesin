@@ -227,6 +227,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         mMemberPhone.setText(member.getPhone());
         mMemberWeight.setText(String.valueOf(member.getWeight()));
         mMemberHeight.setText(String.valueOf(member.getHeight()));
+        mNameEdit.setText(member.getName());
 
         if (member.getGender() == Gender.MALE) {
             mGenderSpinner.setSelection(0);
