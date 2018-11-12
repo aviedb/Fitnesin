@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import com.google.gson.internal.bind.util.ISO8601Utils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -24,6 +26,8 @@ public class RegisterInstructorActivity extends Activity {
     private TextInputEditText mLocation;
     private TextInputEditText mBirthdate;
     private DatePickerDialog dpd;
+
+    private Calendar selectedDate = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +60,10 @@ public class RegisterInstructorActivity extends Activity {
         dpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
-                Calendar newBirthdate = Calendar.getInstance();
-                newBirthdate.set(mYear, mMonth, mDay);
+                selectedDate.set(mYear, mMonth, mDay);
 
                 SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-                mBirthdate.setText(formatter.format(newBirthdate.getTime()));
+                mBirthdate.setText(formatter.format(selectedDate.getTime()));
 
             }
         },day,month,year);
@@ -114,7 +117,7 @@ public class RegisterInstructorActivity extends Activity {
         data.putExtra("akAuthCode", this.getIntent().getStringExtra("akAuthCode"));
         data.putExtra("name", mName.getText().toString());
         data.putExtra("city", mLocation.getText().toString());
-        data.putExtra("birthdate", mBirthdate.getText().toString());
+        data.putExtra("birthdate", ISO8601Utils.format(selectedDate.getTime()));
         data.putExtra("gender", selectedGender.toString().toLowerCase());
 
         setResult(Activity.RESULT_OK, data);
