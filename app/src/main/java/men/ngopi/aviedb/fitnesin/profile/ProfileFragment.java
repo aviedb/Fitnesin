@@ -1,5 +1,6 @@
 package men.ngopi.aviedb.fitnesin.profile;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +10,11 @@ import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,6 +42,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     private TextInputEditText mMemberBirthdate;
     private TextInputEditText mMemberWeight;
     private TextInputEditText mMemberHeight;
+    private TextInputEditText mNameEdit;
+    private TextInputLayout mNameEditLayout;
     private MaterialButton logoutBtn;
     private MaterialButton saveBtn;
     private DatePickerDialog dpd;
@@ -46,6 +52,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     private Calendar selectedBirthdate = Calendar.getInstance();
     private View rootView;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +85,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
 //                String name = mMemberName.getText().toString();
                 String weight = mMemberWeight.getText().toString();
                 String height = mMemberHeight.getText().toString();
+                String name = mMemberName.getText().toString();
 
                 if (weight.length() == 0) {
                     mMemberWeight.setError("Weight can't be empty");
@@ -104,6 +112,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
                 }
 
                 mPresenter.saveProfile(
+                        name,
                         gender,
                         selectedBirthdate,
                         weightVal,
@@ -141,6 +150,48 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
             }
         });
 
+        mNameEdit = rootView.findViewById(R.id.ti_name_edit);
+        mNameEditLayout = rootView.findViewById(R.id.ti_name_edit_layout);
+
+        mMemberName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMemberName.setVisibility(View.GONE);
+                mNameEditLayout.setVisibility(View.VISIBLE);
+                mNameEdit.requestFocus();
+            }
+        });
+
+        mNameEdit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (mNameEdit.getRight() - mNameEdit.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        boolean isValid = true;
+                        String name = mNameEdit.getText().toString();
+
+                        if (name.length() == 0) {
+                            isValid = false;
+                            mNameEdit.setError("Name can't be empty");
+                        }
+
+                        if (!isValid)
+                            return false;
+
+                        Snackbar.make(v, "Display name saved", Snackbar.LENGTH_LONG).show();
+                        mMemberName.setText(name);
+                        mMemberName.setVisibility(View.VISIBLE);
+                        mNameEditLayout.setVisibility(View.GONE);
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
         return rootView;
     }
 
@@ -171,6 +222,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         mMemberPhone.setText(member.getPhone());
         mMemberWeight.setText(String.valueOf(member.getWeight()));
         mMemberHeight.setText(String.valueOf(member.getHeight()));
+        mNameEdit.setText(member.getName());
 
         if (member.getGender() == Gender.MALE) {
             mGenderSpinner.setSelection(0);

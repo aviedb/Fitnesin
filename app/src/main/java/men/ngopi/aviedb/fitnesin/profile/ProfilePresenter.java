@@ -43,9 +43,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void saveProfile(Gender gender, Calendar birthdate, double weight, double height) {
+    public void saveProfile(String name, Gender gender, Calendar birthdate, double weight, double height) {
         Member updatedMember = new Member(
-                mMember.getName(),
+                name,
                 mMember.getPhone(),
                 birthdate,
                 weight,
