@@ -17,6 +17,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PATCH;
@@ -86,5 +87,7 @@ public class FitnesinService {
         @PATCH("instructors/me")
         Call<ModelResponse<Instructor>> updateMeInstructor(@Header("Authorization") String token, @Body Instructor instructor);
 
+        @DELETE("instructors/me")
+        Call<Void> deleteMeInstructor(@Header("Authorization") String token);
     }
 }
