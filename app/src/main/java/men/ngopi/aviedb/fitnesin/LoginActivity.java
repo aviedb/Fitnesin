@@ -22,7 +22,6 @@ import men.ngopi.aviedb.fitnesin.data.Member;
 
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
 import men.ngopi.aviedb.fitnesin.network.model.ModelResponse;
-import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
 import men.ngopi.aviedb.fitnesin.network.model.registerInstructor.RegisterInstructorRequest;
@@ -176,9 +175,9 @@ public class LoginActivity extends Activity {
                 data.getStringExtra("gender")
         );
         // TODO: Show loading (2)
-        fitnesinService.registerMember(req).enqueue(new Callback<FetchMemberResponse>() {
+        fitnesinService.registerMember(req).enqueue(new Callback<ModelResponse<Member>>() {
             @Override
-            public void onResponse(Call<FetchMemberResponse> call, Response<FetchMemberResponse> response) {
+            public void onResponse(Call<ModelResponse<Member>> call, Response<ModelResponse<Member>> response) {
                 if (!response.isSuccessful()) {
                     showToast("Not successfull");
                     return;
@@ -195,7 +194,7 @@ public class LoginActivity extends Activity {
             }
 
             @Override
-            public void onFailure(Call<FetchMemberResponse> call, Throwable t) {
+            public void onFailure(Call<ModelResponse<Member>> call, Throwable t) {
                 showToast("Registration Failed");
             }
         });

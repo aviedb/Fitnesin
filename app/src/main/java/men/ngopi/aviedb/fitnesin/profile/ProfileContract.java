@@ -21,8 +21,6 @@ public interface ProfileContract {
 
         void loadProfile();
 
-        void loadProfile(String token);
-
         void saveProfile(String name, Gender gender, Calendar birthdate, double height, double weight);
 
     }

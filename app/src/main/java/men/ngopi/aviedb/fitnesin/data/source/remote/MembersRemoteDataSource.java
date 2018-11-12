@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import men.ngopi.aviedb.fitnesin.data.Member;
 import men.ngopi.aviedb.fitnesin.data.source.MembersDataSource;
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
-import men.ngopi.aviedb.fitnesin.network.model.fetchMember.FetchMemberResponse;
+import men.ngopi.aviedb.fitnesin.network.model.ModelResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,9 +38,9 @@ public class MembersRemoteDataSource implements MembersDataSource {
 
         // TODO: add cache
 
-        service.fetchMember(mToken).enqueue(new Callback<FetchMemberResponse>() {
+        service.fetchMember(mToken).enqueue(new Callback<men.ngopi.aviedb.fitnesin.network.model.ModelResponse<Member>>() {
             @Override
-            public void onResponse(Call<FetchMemberResponse> call, Response<FetchMemberResponse> response) {
+            public void onResponse(Call<ModelResponse<Member>> call, Response<ModelResponse<Member>> response) {
                 if(response.isSuccessful()) {
                     callback.onMemberLoaded(response.body().getData());
                 } else {
@@ -49,7 +49,7 @@ public class MembersRemoteDataSource implements MembersDataSource {
             }
 
             @Override
-            public void onFailure(Call<FetchMemberResponse> call, Throwable t) {
+            public void onFailure(Call<ModelResponse<Member>> call, Throwable t) {
                 callback.onDataNotAvailable();
             }
         });
@@ -58,9 +58,9 @@ public class MembersRemoteDataSource implements MembersDataSource {
     @Override
     public void saveMe(@NonNull Member member, @NonNull final GetMemberCallback callback) {
 
-        service.updateMeMember(mToken, member).enqueue(new Callback<FetchMemberResponse>() {
+        service.updateMeMember(mToken, member).enqueue(new Callback<ModelResponse<Member>>() {
             @Override
-            public void onResponse(Call<FetchMemberResponse> call, Response<FetchMemberResponse> response) {
+            public void onResponse(Call<ModelResponse<Member>> call, Response<ModelResponse<Member>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getData() != null)
                     callback.onMemberLoaded(response.body().getData());
                 else
@@ -68,7 +68,7 @@ public class MembersRemoteDataSource implements MembersDataSource {
             }
 
             @Override
-            public void onFailure(Call<FetchMemberResponse> call, Throwable t) {
+            public void onFailure(Call<ModelResponse<Member>> call, Throwable t) {
                 callback.onDataNotAvailable();
             }
         });
