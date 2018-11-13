@@ -1,24 +1,29 @@
 package men.ngopi.aviedb.fitnesin;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
 
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.remote.InstructorsRemoteDataSource;
 
-public class InstructorMainActivity extends Activity implements View.OnClickListener {
+public class InstructorMainActivity extends AppCompatActivity implements View.OnClickListener {
     private static int APP_EDIT_INSTRUCTOR = 300;
 
     private TextView mName;
@@ -57,8 +62,88 @@ public class InstructorMainActivity extends Activity implements View.OnClickList
         instructorsDataSource = InstructorsRemoteDataSource.getInstance(token);
         getData();
 
-        // TODO: add delete instructor button
+        // Add action menu on appBar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         // TODO: implement MVP pattern
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_delete_account) {
+//            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+//            builder1.setTitle("Delete Account");
+//            builder1.setMessage("Are you sure you want to delete your account?");
+//            builder1.setCancelable(true);
+
+            LayoutInflater layoutInflater = LayoutInflater.from(this);
+            View promptView = layoutInflater.inflate(R.layout.prompt, null);
+
+            final AlertDialog alertD = new AlertDialog.Builder(this).create();
+
+            MaterialButton yesBtn = (MaterialButton) promptView.findViewById(R.id.yes_button);
+
+            MaterialButton noBtn = (MaterialButton) promptView.findViewById(R.id.no_button);
+
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    Toast.makeText(InstructorMainActivity.this, "Account deleted [NOT REALLY]", Toast.LENGTH_LONG).show();
+                    alertD.dismiss();
+
+                }
+            });
+
+            noBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    alertD.cancel();
+
+                }
+            });
+
+            alertD.setView(promptView);
+
+            alertD.show();
+
+//            builder1.setPositiveButton(
+//                    "Yes",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            // TODO: Delete account
+//                            Toast.makeText(InstructorMainActivity.this, "Account Deleted [NOT REALLY]", Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//
+//            builder1.setNegativeButton(
+//                    "No",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                        }
+//                    });
+
+//            AlertDialog alert11 = builder1.create();
+//            alert11.show();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

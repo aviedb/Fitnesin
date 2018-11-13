@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:layout_constraintCircleRadius="7.5dp"
+    android:paddingTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you sure you want to delete your account?"
+        android:textColor="#424242"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/google_sans"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <android.support.design.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:id="@+id/no_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No" />
+
+        <android.support.design.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:id="@+id/yes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:layout_marginEnd="4dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

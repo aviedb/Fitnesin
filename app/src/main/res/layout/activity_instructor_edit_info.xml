@@ -178,34 +178,6 @@
                 android:text="Save"
                 android:textAllCaps="false" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#D9D9D9"
-                android:layout_marginVertical="16dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/google_sans"
-                android:text="Account"
-                android:textColor="#424242"
-                android:textSize="20sp" />
-
-            <android.support.design.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_marginHorizontal="16dp"
-                android:id="@+id/delete_account"
-                app:backgroundTint="#c62828"
-                android:fontFamily="@font/google_sans"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:textAllCaps="false"
-                android:text="Delete Account"
-                android:layout_marginBottom="10dp"/>
-
         </LinearLayout>
 
     </ScrollView>
