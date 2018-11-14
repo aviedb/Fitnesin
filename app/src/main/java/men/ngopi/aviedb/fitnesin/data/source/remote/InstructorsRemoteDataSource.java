@@ -98,4 +98,22 @@ public class InstructorsRemoteDataSource implements InstructorsDataSource {
         });
 
     }
+
+    @Override
+    public void deleteMe(@NonNull final DeleteInstructorCallback callback) {
+        service.deleteMeInstructor(mToken).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful())
+                    callback.onSuccess();
+                else
+                    callback.onFailure();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure();
+            }
+        });
+    }
 }

@@ -51,4 +51,9 @@ public class InstructorsLocalDataSource implements InstructorsDataSource {
         instructors.add(instructor);
         callback.onInstructorLoaded(instructor);
     }
+
+    @Override
+    public void deleteMe(@NonNull DeleteInstructorCallback callback) {
+        callback.onSuccess();
+    }
 }

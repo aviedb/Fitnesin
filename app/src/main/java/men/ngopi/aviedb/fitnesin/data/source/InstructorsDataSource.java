@@ -24,6 +24,14 @@ public interface InstructorsDataSource {
 
     }
 
+    interface DeleteInstructorCallback {
+
+        void onSuccess();
+
+        void onFailure();
+
+    }
+
     void getInstructors(@NonNull LoadInstructorsCallback callback);
 
     void getInstructor(@NonNull String instructorId, @NonNull GetInstructorCallback callback);
@@ -31,4 +39,6 @@ public interface InstructorsDataSource {
     void getMe(@NonNull GetInstructorCallback callback);
 
     void saveMe(@NonNull Instructor instructor, @NonNull GetInstructorCallback callback);
+
+    void deleteMe(@NonNull DeleteInstructorCallback callback);
 }

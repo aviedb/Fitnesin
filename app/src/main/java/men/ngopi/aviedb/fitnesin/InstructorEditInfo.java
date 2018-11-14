@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import men.ngopi.aviedb.fitnesin.data.Gender;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -85,14 +86,14 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
                 mBirthdate.setText(formatter.format(newBirthdate.getTime()));
 
             }
-        },day,month,year);
+        }, day, month, year);
 
         // Initial Birthdate
         now.set(1971, 5, 28);
         mBirthdate.setText(formatter.format(now.getTime()));
 
         dpd.updateDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
-        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() + 60*60*1000);
+        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() + 60 * 60 * 1000);
 
         mBirthdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +116,7 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
             data.putExtra("gender", mGenderSpinner.getSelectedItemPosition() == 0 ? Gender.MALE.toString() : Gender.FEMALE.toString());
             setResult(Activity.RESULT_OK, data);
         }
-//        finish();
+        finish();
     }
 
 }

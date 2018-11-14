@@ -102,7 +102,7 @@ public class InstructorMainActivity extends AppCompatActivity implements View.On
             yesBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-                    Toast.makeText(InstructorMainActivity.this, "Account deleted [NOT REALLY]", Toast.LENGTH_LONG).show();
+                    deleteInstructor();
                     alertD.dismiss();
 
                 }
@@ -235,5 +235,20 @@ public class InstructorMainActivity extends AppCompatActivity implements View.On
         startActivity(intent);
         finish();
 
+    }
+
+    private void deleteInstructor() {
+        instructorsDataSource.deleteMe(new InstructorsDataSource.DeleteInstructorCallback() {
+            @Override
+            public void onSuccess() {
+                logout();
+                Toast.makeText(InstructorMainActivity.this, "Account deleted", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure() {
+                Toast.makeText(InstructorMainActivity.this, "Unable to delete Instructor", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
