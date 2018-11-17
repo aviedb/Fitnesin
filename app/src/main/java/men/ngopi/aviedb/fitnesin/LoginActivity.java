@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,11 +17,16 @@ import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.data.Member;
 
 import men.ngopi.aviedb.fitnesin.network.FitnesinService;
+import men.ngopi.aviedb.fitnesin.network.model.ErrorResponse;
 import men.ngopi.aviedb.fitnesin.network.model.ModelResponse;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
@@ -122,6 +128,11 @@ public class LoginActivity extends Activity {
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
                     finish();
+                }
+
+                if (response.code() == 404) {
+                    showToast("Member is not registered");
+                    return;
                 }
             }
 
@@ -262,6 +273,22 @@ public class LoginActivity extends Activity {
                     context.startActivity(intent);
                     finish();
                 }
+
+                if (response.code() == 404) {
+                    showToast("Instructor is not registered");
+                    return;
+                }
+
+                if (response.code() > 400) {
+                    Gson gson = new GsonBuilder().create();
+                    ErrorResponse errorResponse = new ErrorResponse();
+                    try {
+                        errorResponse = gson.fromJson(response.errorBody().string(),ErrorResponse.class);
+                        showToast(errorResponse.getMessage());
+                    }catch (IOException e) {
+                        Log.e("authInstructor", "I/O Error");
+                    }
+                }
             }
 
             @Override
@@ -356,6 +383,5 @@ public class LoginActivity extends Activity {
         editor.putBoolean(MainActivity.PREF_USERTOKEN_KEY, forMember);
         editor.apply();
     }
-
 }
 
