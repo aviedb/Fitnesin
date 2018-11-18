@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin.registerMember;
+package men.ngopi.aviedb.fitnesin.login;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -130,7 +130,7 @@ public class RegisterMemberActivity extends AppCompatActivity {
     }
 
     private void finishThisActivity() {
-        // TODO: check for empty / invalid input
+        // check for empty / invalid input
 
         if (!checkInputValues())
             return;

@@ -1,11 +1,10 @@
-package men.ngopi.aviedb.fitnesin.profile;
+package men.ngopi.aviedb.fitnesin.member;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
@@ -17,25 +16,23 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import men.ngopi.aviedb.fitnesin.LoginActivity;
+import men.ngopi.aviedb.fitnesin.data.source.MembersDataSource;
+import men.ngopi.aviedb.fitnesin.data.source.remote.MembersRemoteDataSource;
+import men.ngopi.aviedb.fitnesin.login.LoginActivity;
 import men.ngopi.aviedb.fitnesin.MainActivity;
 import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import men.ngopi.aviedb.fitnesin.data.Member;
 
-public class ProfileFragment extends Fragment implements View.OnClickListener, ProfileContract.View {
-    private ProfileContract.Presenter mPresenter;
-
+public class ProfileFragment extends Fragment implements View.OnClickListener {
     private TextView mMemberName;
     private TextView mMemberPhone;
     private Spinner mGenderSpinner;
@@ -49,6 +46,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     private DatePickerDialog dpd;
 
     private SharedPreferences sharedPreferences;
+    private MembersDataSource mMembersDataSource;
+    private Member mMember;
     private Calendar selectedBirthdate = Calendar.getInstance();
     private View rootView;
 
@@ -111,17 +110,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
                     Log.e(ProfileFragment.class.getSimpleName(), ie.getMessage());
                 }
 
-                mPresenter.saveProfile(
-                        name,
-                        gender,
-                        selectedBirthdate,
-                        weightVal,
-                        heightVal
+                saveProfile(
+                    name,
+                    gender,
+                    selectedBirthdate,
+                    heightVal,
+                    weightVal
                 );
             }
         });
 
         sharedPreferences = rootView.getContext().getSharedPreferences(MainActivity.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+        mMembersDataSource = MembersRemoteDataSource.getInstance(
+                sharedPreferences.getString(MainActivity.PREF_TOKEN_KEY, "")
+        );
 
         Calendar now = Calendar.getInstance();
         int year = now.get(Calendar.YEAR); // Initial year selection
@@ -198,16 +200,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        loadProfile();
     }
 
     @Override
     public void onClick(View v) {
 
+        // logout
+
         // Clear credentials
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(MainActivity.PREF_TOKEN_KEY);
         editor.remove(MainActivity.PREF_USERTOKEN_KEY);
+        editor.remove(MainActivity.PREF_COUNTER_1);
+        editor.remove(MainActivity.PREF_COUNTER_2);
         editor.apply();
 
         // Show LoginActivity
@@ -216,7 +222,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
         getActivity().finish();
     }
 
-    @Override
+
     public void showProfile(Member member) {
         mMemberName.setText(member.getName());
         mMemberPhone.setText(member.getPhone());
@@ -237,13 +243,48 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
 
     }
 
-    @Override
+
     public void showMessage(String message) {
         Snackbar.make(this.rootView, message, Snackbar.LENGTH_LONG).show();
     }
 
-    @Override
-    public void setPresenter(ProfileContract.Presenter presenter) {
-        this.mPresenter = presenter;
+    private void loadProfile() {
+        this.mMembersDataSource.getMe(new MembersDataSource.GetMemberCallback() {
+            @Override
+            public void onMemberLoaded(Member member) {
+                mMember = member;
+                showProfile(member);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                showMessage("Unable to fetch data from server");
+            }
+        });
+    }
+
+    private void saveProfile(String name, Gender gender, Calendar birthdate, double height, double weight) {
+        Member updatedMember = new Member(
+                name,
+                mMember.getPhone(),
+                birthdate,
+                weight,
+                height,
+                gender
+        );
+
+        this.mMembersDataSource.saveMe(updatedMember, new MembersDataSource.GetMemberCallback() {
+            @Override
+            public void onMemberLoaded(Member member) {
+                mMember = member;
+                showProfile(mMember);
+                showMessage("Profile Saved");
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                showMessage("Unable to update member");
+            }
+        });
     }
 }

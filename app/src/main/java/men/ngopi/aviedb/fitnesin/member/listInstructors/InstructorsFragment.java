@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin.instructors;
+package men.ngopi.aviedb.fitnesin.member.listInstructors;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +13,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import men.ngopi.aviedb.fitnesin.InstructorInfo;
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.R; // Needed to import R. resource
+import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
+import men.ngopi.aviedb.fitnesin.data.source.remote.InstructorsRemoteDataSource;
 
-public class InstructorsFragment extends Fragment implements View.OnClickListener, InstructorsContract.View {
-    private InstructorsContract.Presenter mPresenter;
+public class InstructorsFragment extends Fragment implements View.OnClickListener {
+    private InstructorsDataSource mInstructorsDataSource;
 
     private RecyclerView mInstructorsRecylerView;
     private RecyclerView.Adapter mInstructorsAdapter;
@@ -26,14 +27,16 @@ public class InstructorsFragment extends Fragment implements View.OnClickListene
 
     private ArrayList<Instructor> instructors = new ArrayList<>();
 
-    public InstructorsFragment() {
-    }
+    public InstructorsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.find_instructor_fragment, container, false);
 
+        // init instructors data source
+        // no need to use token as getInstructors need no token
+        mInstructorsDataSource = InstructorsRemoteDataSource.getInstance("");
 
         mInstructorsRecylerView = rootView.findViewById(R.id.rcv_instructors);
         mInstructorsRecylerView.setHasFixedSize(true);
@@ -44,32 +47,38 @@ public class InstructorsFragment extends Fragment implements View.OnClickListene
         this.mInstructorsAdapter = new InstructorsAdapter(instructors);
         mInstructorsRecylerView.setAdapter(this.mInstructorsAdapter);
 
-
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        loadInstructors();
     }
 
     @Override
     public void onClick(View v) {
-        Intent i = new Intent(getContext(), InstructorInfo.class);
+        Intent i = new Intent(getContext(), InstructorInfoActivity.class);
         startActivity(i);
     }
 
-    @Override
     public void showInstructors(List<Instructor> instructors) {
-        Log.d("showInstructors", "inserting instructors -> " + instructors.size());
         this.instructors.clear();
         this.instructors.addAll(instructors);
         this.mInstructorsAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void setPresenter(InstructorsContract.Presenter presenter) {
-        this.mPresenter = presenter;
+    private void loadInstructors() {
+        mInstructorsDataSource.getInstructors(new InstructorsDataSource.LoadInstructorsCallback() {
+            @Override
+            public void onInstructorsLoaded(List<Instructor> instructors) {
+                showInstructors(instructors);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                Log.d("onDataNotAvailable", "error occured");
+            }
+        });
     }
 }

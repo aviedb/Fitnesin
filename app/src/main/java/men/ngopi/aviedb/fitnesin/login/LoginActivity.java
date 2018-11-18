@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin;
+package men.ngopi.aviedb.fitnesin.login;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +22,9 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import men.ngopi.aviedb.fitnesin.instructor.InstructorMainActivity;
+import men.ngopi.aviedb.fitnesin.MainActivity;
+import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.data.Member;
 
@@ -33,7 +35,6 @@ import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginRequest;
 import men.ngopi.aviedb.fitnesin.network.model.loginMember.LoginResponse;
 import men.ngopi.aviedb.fitnesin.network.model.registerInstructor.RegisterInstructorRequest;
 import men.ngopi.aviedb.fitnesin.network.model.registerMember.RegisterMemberRequest;
-import men.ngopi.aviedb.fitnesin.registerMember.RegisterMemberActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -187,8 +188,8 @@ public class LoginActivity extends Activity {
                 data.getStringExtra("akAuthCode"),
                 data.getStringExtra("name"),
                 data.getStringExtra("birthdate"),
-                data.getDoubleExtra("height", 1),
                 data.getDoubleExtra("weight", 1),
+                data.getDoubleExtra("height", 1),
                 data.getStringExtra("gender")
         );
         // Show loading
@@ -225,13 +226,13 @@ public class LoginActivity extends Activity {
         Log.d("InstructorRegister", "Name: " + data.getStringExtra("name"));
         Log.d("InstructorRegister", "City: " + data.getStringExtra("city"));
         Log.d("InstructorRegister", "Gender: " + data.getStringExtra("gender"));
-        // TODO: kurang birthdate
+
         RegisterInstructorRequest req = new RegisterInstructorRequest(
                 data.getStringExtra("akAuthCode"),
                 data.getStringExtra("name"),
                 data.getStringExtra("city"),
                 data.getStringExtra("gender"),
-                "1999-01-01T00:00:00Z"
+                data.getStringExtra("birthdate")
         );
 
         // Show loading

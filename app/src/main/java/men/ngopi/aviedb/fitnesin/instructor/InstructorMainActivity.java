@@ -1,9 +1,8 @@
-package men.ngopi.aviedb.fitnesin;
+package men.ngopi.aviedb.fitnesin.instructor;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,10 +17,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import men.ngopi.aviedb.fitnesin.MainActivity;
+import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Gender;
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.remote.InstructorsRemoteDataSource;
+import men.ngopi.aviedb.fitnesin.login.LoginActivity;
 
 public class InstructorMainActivity extends AppCompatActivity implements View.OnClickListener {
     private static int APP_EDIT_INSTRUCTOR = 300;

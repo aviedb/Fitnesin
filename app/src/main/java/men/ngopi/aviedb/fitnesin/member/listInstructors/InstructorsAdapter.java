@@ -1,9 +1,7 @@
-package men.ngopi.aviedb.fitnesin.instructors;
+package men.ngopi.aviedb.fitnesin.member.listInstructors;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,12 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import men.ngopi.aviedb.fitnesin.InstructorInfo;
 import men.ngopi.aviedb.fitnesin.R; // Needed to import R. resource
 import men.ngopi.aviedb.fitnesin.data.Instructor;
 
@@ -100,7 +96,7 @@ public class InstructorsAdapter extends RecyclerView.Adapter<InstructorsAdapter.
         public void onClick(View view) {
             Log.d("onClick", "Clicking");
 
-            Intent i = new Intent(this.context, InstructorInfo.class);
+            Intent i = new Intent(this.context, InstructorInfoActivity.class);
             i.putExtra("INSTRUCTOR_NAME", mNameTextView.getText());
             i.putExtra("GENDER", mGenderTextView.getText());
             i.putExtra("CITY", mCityTextView.getText());

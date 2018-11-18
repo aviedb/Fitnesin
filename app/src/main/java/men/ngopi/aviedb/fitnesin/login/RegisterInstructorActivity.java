@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin;
+package men.ngopi.aviedb.fitnesin.login;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.google.gson.internal.bind.util.ISO8601Utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Gender;
 
 public class RegisterInstructorActivity extends Activity {
