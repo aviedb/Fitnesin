@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin;
+package men.ngopi.aviedb.fitnesin.instructor;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import men.ngopi.aviedb.fitnesin.R;
 import men.ngopi.aviedb.fitnesin.data.Gender;
 
 import java.text.SimpleDateFormat;

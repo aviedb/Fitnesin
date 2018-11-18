@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin.registerMember;
+package men.ngopi.aviedb.fitnesin.login;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

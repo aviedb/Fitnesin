@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin;
+package men.ngopi.aviedb.fitnesin.member.listInstructors;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,8 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import men.ngopi.aviedb.fitnesin.R;
 
-public class InstructorInfo extends Activity implements View.OnClickListener {
+public class InstructorInfoActivity extends Activity implements View.OnClickListener {
     TextView tv, instructorName, location, phoneNumber, gender, birthdate;
     SimpleDateFormat formatter;
     CircleImageView profilePicture;

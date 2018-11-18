@@ -17,14 +17,12 @@ import java.text.ParsePosition;
 import java.util.Date;
 
 import men.ngopi.aviedb.fitnesin.data.source.InstructorsDataSource;
-import men.ngopi.aviedb.fitnesin.data.source.MembersDataSource;
-import men.ngopi.aviedb.fitnesin.data.source.local.InstructorsLocalDataSource;
 import men.ngopi.aviedb.fitnesin.data.source.remote.InstructorsRemoteDataSource;
-import men.ngopi.aviedb.fitnesin.data.source.remote.MembersRemoteDataSource;
-import men.ngopi.aviedb.fitnesin.instructors.InstructorsFragment;
-import men.ngopi.aviedb.fitnesin.instructors.InstructorsPresenter;
-import men.ngopi.aviedb.fitnesin.profile.ProfileFragment;
-import men.ngopi.aviedb.fitnesin.profile.ProfilePresenter;
+import men.ngopi.aviedb.fitnesin.instructor.InstructorMainActivity;
+import men.ngopi.aviedb.fitnesin.member.FitnesinFragment;
+import men.ngopi.aviedb.fitnesin.member.listInstructors.InstructorsFragment;
+import men.ngopi.aviedb.fitnesin.login.LoginActivity;
+import men.ngopi.aviedb.fitnesin.member.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -33,15 +31,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static final String PREF_USERTOKEN_KEY = "token_for_member";
     public static final String PREF_TOKEN_EXPIRY_KEY = "token_expiry";
 
-    Fragment fragment;
+    private Fragment fragment;
 
-    private InstructorsFragment mInstructorsView;
-    private InstructorsPresenter mInstructorsPresenter;
-    private InstructorsDataSource mInstructorsDataSource;
-    private MembersDataSource mMembersDataSource;
+    private InstructorsFragment mInstructorsFragment;
+    private ProfileFragment mProfileFragment;
 
-    private ProfileFragment mProfileView;
-    private ProfilePresenter mProfilePresenter;
 
     private SharedPreferences sharedPreferences;
 
@@ -95,16 +89,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             fragment = getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
         } else {
             //loading the default fragment
-            fragment = new Fitnesin();
+            fragment = new FitnesinFragment();
         }
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-
-        // set up instructors data source
-        mInstructorsDataSource = InstructorsRemoteDataSource.getInstance("");
-        mMembersDataSource = MembersRemoteDataSource.getInstance(loginToken);
     }
 
     @Override
@@ -141,25 +131,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()) {
             case R.id.navigation_fitnesin:
-                fragment = new Fitnesin();
+                fragment = new FitnesinFragment();
                 break;
 
             case R.id.navigation_find_instructor:
-                if (mInstructorsView == null) {
-                    mInstructorsView = new InstructorsFragment();
-                    mInstructorsPresenter = new InstructorsPresenter(mInstructorsDataSource, mInstructorsView);
+                if (mInstructorsFragment == null) {
+                    mInstructorsFragment = new InstructorsFragment();
                 }
-                fragment = mInstructorsView;
+                fragment = mInstructorsFragment;
                 break;
 
             case R.id.navigation_profile:
-                if (mProfileView == null) {
-                    mProfileView = new ProfileFragment();
-                    mProfilePresenter = new ProfilePresenter(mMembersDataSource, mProfileView);
-
+                if (mProfileFragment == null) {
+                    mProfileFragment = new ProfileFragment();
                 }
 
-                fragment = mProfileView;
+                fragment = mProfileFragment;
                 break;
         }
 

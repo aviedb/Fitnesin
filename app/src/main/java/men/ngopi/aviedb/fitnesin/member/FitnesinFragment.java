@@ -1,4 +1,4 @@
-package men.ngopi.aviedb.fitnesin;
+package men.ngopi.aviedb.fitnesin.member;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Fitnesin extends Fragment {
+import men.ngopi.aviedb.fitnesin.R;
+
+public class FitnesinFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
