@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.facebook.accountkit.AccountKitError;
@@ -54,6 +55,12 @@ public class LoginActivity extends Activity {
     private SharedPreferences sharedPreferences;
     private Context context;
 
+    private ProgressBar mLoadingProgressBar;
+    private MaterialButton mMemberLoginButton;
+    private MaterialButton mInstructorLoginButton;
+    private MaterialButton mMemberRegisterButton;
+    private MaterialButton mInstructorRegisterButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,24 +69,34 @@ public class LoginActivity extends Activity {
         // Set context
         context = this;
 
-        MaterialButton mEmailSignInButton = findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        mLoadingProgressBar = findViewById(R.id.login_progress);
+
+        mMemberLoginButton = findViewById(R.id.email_sign_in_button);
+        mMemberLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLoginAsMember();
             }
         });
 
-        MaterialButton mRegisterAsMemberButton = findViewById(R.id.register_member_button);
-        mRegisterAsMemberButton.setOnClickListener(new View.OnClickListener() {
+        mInstructorLoginButton = findViewById(R.id.sign_in_instructor);
+        mInstructorLoginButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attemptLoginAsInstructor();
+            }
+        });
+
+        mMemberRegisterButton= findViewById(R.id.register_member_button);
+        mMemberRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptRegisterAsMember();
             }
         });
 
-        MaterialButton mRegisterAsInstructorButton = findViewById(R.id.register_instructor_button);
-        mRegisterAsInstructorButton.setOnClickListener(new View.OnClickListener() {
+        mInstructorRegisterButton= findViewById(R.id.register_instructor_button);
+        mInstructorRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptRegisterAsInstructor();
@@ -87,14 +104,6 @@ public class LoginActivity extends Activity {
         });
 
         sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCE, MODE_PRIVATE);
-        MaterialButton mSignInInstructor = findViewById(R.id.sign_in_instructor);
-        mSignInInstructor.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptLoginAsInstructor();
-            }
-        });
-
     }
 
     private void attemptLoginAsMember() {
@@ -103,19 +112,18 @@ public class LoginActivity extends Activity {
 
     private void attemptLoginAsInstructor() {
         verifyAccountKitPhone(AK_LOGIN_AS_INSTRUCTOR);
-//        final Intent i = new Intent(this, InstructorMainActivity.class);
-//        startActivity(i);
     }
 
     private void onVerifyPhoneForLoginAsMember(String authCode) {
         LoginRequest req = new LoginRequest();
         req.setAuthCode(authCode);
 
-        // TODO: Show loading (3)
+        // Show loading (3)
+        setLoading(true);
         fitnesinService.loginMember(req).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
+                setLoading(false);
                 Log.d("authMember", "response: " + response.toString());
                 Log.d("authMember", "isSuccessful: " + response.isSuccessful());
                 Log.d("authMember", "code: " + response.code());
@@ -138,6 +146,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                setLoading(false);
                 Log.e("authMember", "failed");
             }
         });
@@ -145,14 +154,11 @@ public class LoginActivity extends Activity {
 
     private void attemptRegisterAsMember() {
         verifyAccountKitPhone(AK_REGISTER_AS_MEMBER);
-//        onVerifyPhoneForRegisterAsMember("");
     }
 
     private void attemptRegisterAsInstructor() {
-        // TODO: Verify phone number first
+        // Verify phone number first
         verifyAccountKitPhone(AK_REGISTER_AS_INSTRUCTOR);
-//        Intent i = new Intent(this, RegisterInstructorActivity.class);
-//        startActivity(i);
     }
 
     private void onVerifyPhoneForRegisterAsMember(String authCode) {
@@ -185,10 +191,12 @@ public class LoginActivity extends Activity {
                 data.getDoubleExtra("weight", 1),
                 data.getStringExtra("gender")
         );
-        // TODO: Show loading (2)
+        // Show loading
+        setLoading(true);
         fitnesinService.registerMember(req).enqueue(new Callback<ModelResponse<Member>>() {
             @Override
             public void onResponse(Call<ModelResponse<Member>> call, Response<ModelResponse<Member>> response) {
+                setLoading(false);
                 if (!response.isSuccessful()) {
                     showToast("Not successfull");
                     return;
@@ -206,6 +214,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onFailure(Call<ModelResponse<Member>> call, Throwable t) {
+                setLoading(false);
                 showToast("Registration Failed");
             }
         });
@@ -225,10 +234,12 @@ public class LoginActivity extends Activity {
                 "1999-01-01T00:00:00Z"
         );
 
-        // TODO: Show loading (4)
+        // Show loading
+        setLoading(true);
         fitnesinService.registerInstructor(req).enqueue(new Callback<ModelResponse<Instructor>>() {
             @Override
             public void onResponse(Call<ModelResponse<Instructor>> call, Response<ModelResponse<Instructor>> response) {
+                setLoading(false);
                 if (!response.isSuccessful()) {
                     showToast("Instructor Registration Not successfull");
                     return;
@@ -245,6 +256,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onFailure(Call<ModelResponse<Instructor>> call, Throwable t) {
+                setLoading(false);
                 showToast("Instructor Registration Failed");
             }
         });
@@ -255,10 +267,12 @@ public class LoginActivity extends Activity {
         LoginRequest req = new LoginRequest();
         req.setAuthCode(authCode);
 
-        // TODO: Show loading (1)
+        // Show loading
+        setLoading(true);
         fitnesinService.loginInstructor(req).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                setLoading(false);
                 Log.d("authInstructor", "response: " + response.toString());
                 Log.d("authInstructor", "isSuccessful: " + response.isSuccessful());
                 Log.d("authInstructor", "code: " + response.code());
@@ -293,6 +307,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                setLoading(false);
                 Log.e("authInstructor", "failed");
             }
         });
@@ -382,6 +397,15 @@ public class LoginActivity extends Activity {
         editor.putString(MainActivity.PREF_TOKEN_EXPIRY_KEY, expiry);
         editor.putBoolean(MainActivity.PREF_USERTOKEN_KEY, forMember);
         editor.apply();
+    }
+
+    private void setLoading(boolean loading) {
+        mLoadingProgressBar.setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
+        mMemberLoginButton.setEnabled(!loading);
+        mInstructorLoginButton.setEnabled(!loading);
+        mMemberRegisterButton.setEnabled(!loading);
+        mInstructorRegisterButton.setEnabled(!loading);
+
     }
 }
 
