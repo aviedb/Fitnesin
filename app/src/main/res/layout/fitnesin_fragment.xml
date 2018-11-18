@@ -169,24 +169,159 @@
                 android:layout_height="1dp"
                 android:background="#D9D9D9"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:fontFamily="@font/google_sans"
-                android:textColor="#424242"
-                android:layout_marginVertical="16dp"
-                android:layout_marginHorizontal="16dp"
-                android:text="Update Exercise"/>
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
-            <android.support.design.button.MaterialButton
-                android:layout_width="match_parent"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="Update"
-                android:textAllCaps="false"
-                android:fontFamily="@font/google_sans"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/google_sans"
+                    android:textColor="#424242"
+                    android:layout_marginBottom="16dp"
+                    android:text="Update Exercise"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:text="Push Up"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/ex1_min_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fabCustomSize="36dp"
+                            app:srcCompat="@drawable/ic_remove_black_24dp"
+                            app:elevation="0dp"
+                            app:tint="#ffffff"
+                            app:backgroundTint="#00B298"/>
+
+                        <TextView
+                            android:id="@+id/ex1_value"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:fontFamily="@font/google_sans"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="65"
+                            android:textSize="16sp"
+                            android:textColor="#00B298"
+                            android:textStyle="bold"/>
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/ex1_plus_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fabCustomSize="36dp"
+                            app:srcCompat="@drawable/ic_add_black_24dp"
+                            app:elevation="0dp"
+                            android:tint="#ffffff"
+                            app:backgroundTint="#00B298"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:text="Biking (km)"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/ex2_min_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fabCustomSize="36dp"
+                            app:srcCompat="@drawable/ic_remove_black_24dp"
+                            app:elevation="0dp"
+                            app:tint="#ffffff"
+                            app:backgroundTint="#184EA6"/>
+
+                        <TextView
+                            android:id="@+id/ex2_value"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:fontFamily="@font/google_sans"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="4"
+                            android:textSize="16sp"
+                            android:textColor="#184EA6"
+                            android:textStyle="bold"/>
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/ex2_plus_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fabCustomSize="36dp"
+                            app:srcCompat="@drawable/ic_add_black_24dp"
+                            app:elevation="0dp"
+                            android:tint="#ffffff"
+                            app:backgroundTint="#184EA6"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
