@@ -188,8 +188,8 @@ public class LoginActivity extends Activity {
                 data.getStringExtra("akAuthCode"),
                 data.getStringExtra("name"),
                 data.getStringExtra("birthdate"),
-                data.getDoubleExtra("height", 1),
                 data.getDoubleExtra("weight", 1),
+                data.getDoubleExtra("height", 1),
                 data.getStringExtra("gender")
         );
         // Show loading

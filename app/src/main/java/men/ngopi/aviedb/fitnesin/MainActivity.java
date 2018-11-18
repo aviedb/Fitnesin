@@ -30,9 +30,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static final String PREF_TOKEN_KEY = "token";
     public static final String PREF_USERTOKEN_KEY = "token_for_member";
     public static final String PREF_TOKEN_EXPIRY_KEY = "token_expiry";
+    public static final String PREF_COUNTER_1 = "sport_1_counter";
+    public static final String PREF_COUNTER_2 = "sport_2_counter";
+
 
     private Fragment fragment;
 
+    private FitnesinFragment mFitnesinFragment;
     private InstructorsFragment mInstructorsFragment;
     private ProfileFragment mProfileFragment;
 
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 editor.remove(PREF_TOKEN_KEY);
                 editor.remove(PREF_TOKEN_EXPIRY_KEY);
                 editor.remove(PREF_USERTOKEN_KEY);
+                editor.remove(PREF_COUNTER_1);
+                editor.remove(PREF_COUNTER_2);
                 editor.apply();
                 showLogin();
                 return;
@@ -131,7 +137,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()) {
             case R.id.navigation_fitnesin:
-                fragment = new FitnesinFragment();
+                if (mFitnesinFragment == null) {
+                    mFitnesinFragment = new FitnesinFragment();
+                }
+                fragment = mFitnesinFragment;
                 break;
 
             case R.id.navigation_find_instructor:

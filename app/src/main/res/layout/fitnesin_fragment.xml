@@ -84,6 +84,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_sport_1_name"
                             android:layout_width="75dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/google_sans"
@@ -102,15 +103,26 @@
                             android:text=":  "/>
 
                         <TextView
+                            android:id="@+id/tv_sport_1_counter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/google_sans"
                             android:textColor="#00B298"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:text="65 / "/>
+                            android:text="65"/>
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textColor="#00B298"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:text=" / "/>
+
+                        <TextView
+                            android:id="@+id/tv_sport_1_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/google_sans"
@@ -125,6 +137,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_sport_2_name"
                             android:layout_width="75dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/google_sans"
@@ -142,19 +155,31 @@
                             android:textStyle="bold"
                             android:text=":  "/>
 
+
                         <TextView
+                            android:id="@+id/tv_sport_2_counter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/google_sans"
                             android:textColor="#184EA6"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:text="4 / "/>
+                            android:text="4"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/google_sans"
+                            android:textColor="#184EA6"
+                            android:textSize="16sp"
+                            android:text=" / "/>
+
+                        <TextView
+                            android:id="@+id/tv_sport_2_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textColor="#184EA6"
                             android:textSize="16sp"
                             android:text="10"/>
 
@@ -194,6 +219,7 @@
                     android:paddingBottom="12dp">
 
                     <TextView
+                        android:id="@+id/tv_sport_1_update"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/google_sans"
@@ -262,6 +288,7 @@
                     android:paddingBottom="12dp">
 
                     <TextView
+                        android:id="@+id/tv_sport_2_update"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/google_sans"

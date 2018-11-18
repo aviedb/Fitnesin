@@ -114,8 +114,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     name,
                     gender,
                     selectedBirthdate,
-                    weightVal,
-                    heightVal
+                    heightVal,
+                    weightVal
                 );
             }
         });
@@ -212,6 +212,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(MainActivity.PREF_TOKEN_KEY);
         editor.remove(MainActivity.PREF_USERTOKEN_KEY);
+        editor.remove(MainActivity.PREF_COUNTER_1);
+        editor.remove(MainActivity.PREF_COUNTER_2);
         editor.apply();
 
         // Show LoginActivity
