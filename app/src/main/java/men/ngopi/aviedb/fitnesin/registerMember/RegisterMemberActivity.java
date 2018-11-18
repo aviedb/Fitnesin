@@ -130,7 +130,7 @@ public class RegisterMemberActivity extends AppCompatActivity {
     }
 
     private void finishThisActivity() {
-        // TODO: check for empty / invalid input
+        // check for empty / invalid input
 
         if (!checkInputValues())
             return;

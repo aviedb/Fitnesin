@@ -225,13 +225,13 @@ public class LoginActivity extends Activity {
         Log.d("InstructorRegister", "Name: " + data.getStringExtra("name"));
         Log.d("InstructorRegister", "City: " + data.getStringExtra("city"));
         Log.d("InstructorRegister", "Gender: " + data.getStringExtra("gender"));
-        // TODO: kurang birthdate
+
         RegisterInstructorRequest req = new RegisterInstructorRequest(
                 data.getStringExtra("akAuthCode"),
                 data.getStringExtra("name"),
                 data.getStringExtra("city"),
                 data.getStringExtra("gender"),
-                "1999-01-01T00:00:00Z"
+                data.getStringExtra("birthdate")
         );
 
         // Show loading
