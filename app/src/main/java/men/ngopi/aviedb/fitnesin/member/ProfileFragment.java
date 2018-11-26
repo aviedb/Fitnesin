@@ -12,10 +12,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -164,6 +166,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        mNameEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    saveName(v);
+                }
+                return false;
+            }
+        });
         mNameEdit.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -171,21 +182,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(event.getRawX() >= (mNameEdit.getRight() - mNameEdit.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        boolean isValid = true;
-                        String name = mNameEdit.getText().toString();
-
-                        if (name.length() == 0) {
-                            isValid = false;
-                            mNameEdit.setError("Name can't be empty");
-                        }
-
-                        if (!isValid)
-                            return false;
-
-                        Snackbar.make(v, "Display name saved", Snackbar.LENGTH_LONG).show();
-                        mMemberName.setText(name);
-                        mMemberName.setVisibility(View.VISIBLE);
-                        mNameEditLayout.setVisibility(View.GONE);
+                        saveName(v);
 
                         return true;
                     }
@@ -195,6 +192,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         });
 
         return rootView;
+    }
+
+    public void saveName(View v) {
+        boolean isValid = true;
+        String name = mNameEdit.getText().toString();
+
+        if (name.length() == 0) {
+            isValid = false;
+            mNameEdit.setError("Name can't be empty");
+        }
+
+        if (!isValid)
+            return;
+
+        Snackbar.make(v, "Display name saved", Snackbar.LENGTH_LONG).show();
+        mMemberName.setText(name);
+        mMemberName.setVisibility(View.VISIBLE);
+        mNameEditLayout.setVisibility(View.GONE);
     }
 
     @Override

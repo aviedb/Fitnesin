@@ -76,6 +76,7 @@
                     android:drawableEnd="@drawable/fa_save"
                     android:maxLines="1"
                     android:id="@+id/ti_name_edit"
+                    android:imeOptions="actionDone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/google_sans"
