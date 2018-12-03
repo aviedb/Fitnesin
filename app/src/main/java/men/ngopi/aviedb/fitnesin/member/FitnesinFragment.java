@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,16 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
     private TextView ex1Value, ex2Value, sport1Name, sport1Counter, sport1Value, sport2Name, sport2Counter, sport2Value;
     private TextView sport1Update, sport2Update;
 
+    private String sport1NameString = "";
+    private String sport2NameString = "";
+
     private int sport1MaxVal = 100;
     private int sport2MaxVal = 10;
     private int sport1CounterVal = 0;
     private int sport2CounterVal = 0;
+
+    private ProgressBar progressBar1;
+    private ProgressBar progressBar2;
 
     private MembersDataSource mMembersDataSource;
     private SharedPreferences sharedPreferences;
@@ -49,6 +56,9 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fitnesin_fragment, null);
+
+        progressBar1 = rootView.findViewById(R.id.progressBar1);
+        progressBar2 = rootView.findViewById((R.id.progressBar2));
 
         ex1MinButton = rootView.findViewById(R.id.ex1_min_button);
         ex1PlusButton = rootView.findViewById(R.id.ex1_plus_button);
@@ -96,19 +106,45 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.equals(ex1MinButton)) {
-            if (sport1CounterVal > 0)
-                sport1CounterVal--;
-
+            if (sport1CounterVal > 0) {
+//                sport1CounterVal--;
+                if (sport1NameString.equals("Running") || sport1NameString.equals("Biking"))
+                    sport1CounterVal -= 50;
+                else if (sport1NameString.equals("Jogging") || sport1NameString.equals("Jump Rope"))
+                    sport1CounterVal -= 10;
+                else
+                    sport1CounterVal--;
+            }
         } else if (v.equals(ex1PlusButton)) {
-            if (sport1CounterVal < sport1MaxVal)
-                sport1CounterVal++;
-
+            if (sport1CounterVal < sport1MaxVal) {
+//                sport1CounterVal++;
+                if (sport1NameString.equals("Running") || sport1NameString.equals("Biking"))
+                    sport1CounterVal += 50;
+                else if (sport1NameString.equals("Jogging") || sport1NameString.equals("Jump Rope"))
+                    sport1CounterVal += 10;
+                else
+                    sport1CounterVal++;
+            }
         } else if (v.equals(ex2MinButton)) {
-            if (sport2CounterVal > 0)
-                sport2CounterVal--;
+            if (sport2CounterVal > 0) {
+//                sport2CounterVal--;
+                if (sport2NameString.equals("Running") || sport2NameString.equals("Biking"))
+                    sport2CounterVal -= 50;
+                else if (sport2NameString.equals("Jogging") || sport2NameString.equals("Jump Rope"))
+                    sport2CounterVal -= 10;
+                else
+                    sport2CounterVal--;
+            }
         } else if (v.equals(ex2PlusButton)) {
-            if (sport2CounterVal < sport2MaxVal)
-                sport2CounterVal++;
+            if (sport2CounterVal < sport2MaxVal) {
+//                sport2CounterVal++;
+                if (sport2NameString.equals("Running") || sport2NameString.equals("Biking"))
+                    sport2CounterVal += 50;
+                else if (sport2NameString.equals("Jogging") || sport2NameString.equals("Jump Rope"))
+                    sport2CounterVal += 10;
+                else
+                    sport2CounterVal++;
+            }
         }
         updateCounterValue();
     }
@@ -120,6 +156,9 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
         ex1Value.setText(String.valueOf(sport1CounterVal));
         sport2Counter.setText(String.valueOf(sport2CounterVal));
         ex2Value.setText(String.valueOf(sport2CounterVal));
+
+        progressBar1.setProgress(sport1CounterVal);
+        progressBar2.setProgress(sport2CounterVal);
 
         if (sharedPrefEditor == null)
             sharedPrefEditor = sharedPreferences.edit();
@@ -172,8 +211,14 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
         sport1Update.setText(sport1NameFormatted);
         sport2Update.setText(sport2NameFormatted);
 
+        sport1NameString = sport1.getName();
+        sport2NameString = sport2.getName();
+
         sport1MaxVal = sport1.getValue();
         sport2MaxVal = sport2.getValue();
+
+        progressBar1.setMax(sport1MaxVal);
+        progressBar2.setMax(sport2MaxVal);
     }
 
     private void showMessage(String message) {
