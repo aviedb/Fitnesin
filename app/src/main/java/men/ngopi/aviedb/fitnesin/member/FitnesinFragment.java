@@ -1,13 +1,16 @@
 package men.ngopi.aviedb.fitnesin.member;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -42,6 +45,13 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
     private SharedPreferences.Editor sharedPrefEditor;
     private Member mMember;
 
+    private Handler repeatUpdateHandler = new Handler();
+
+    private boolean mAutoIncrement1 = false;
+    private boolean mAutoDecrement1 = false;
+    private boolean mAutoIncrement2 = false;
+    private boolean mAutoDecrement2 = false;
+
     private final Sport[] sports = new Sport[]{
             new Sport("Swimming", "hours", "week", 5),
             new Sport("Biking", "meters", "day", 1000),
@@ -52,6 +62,7 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
     };
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +90,87 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
         ex1PlusButton.setOnClickListener(this);
         ex2MinButton.setOnClickListener(this);
         ex2PlusButton.setOnClickListener(this);
+
+        // Long press handler
+        ex1MinButton.setOnLongClickListener(
+                new View.OnLongClickListener(){
+                    public boolean onLongClick(View arg0) {
+                        mAutoDecrement1 = true;
+                        repeatUpdateHandler.post( new RptUpdater() );
+                        return false;
+                    }
+                }
+        );
+        ex1MinButton.setOnTouchListener( new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
+                        && mAutoDecrement1 ){
+                    mAutoDecrement1 = false;
+                }
+                return false;
+            }
+        });
+
+        ex1PlusButton.setOnLongClickListener(
+                new View.OnLongClickListener(){
+                    public boolean onLongClick(View arg0) {
+                        mAutoIncrement1 = true;
+                        repeatUpdateHandler.post( new RptUpdater() );
+                        return false;
+                    }
+                }
+        );
+        ex1PlusButton.setOnTouchListener( new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
+                        && mAutoIncrement1 ){
+                    mAutoIncrement1 = false;
+                }
+                return false;
+            }
+        });
+
+        ex2MinButton.setOnLongClickListener(
+                new View.OnLongClickListener(){
+                    public boolean onLongClick(View arg0) {
+                        mAutoDecrement2 = true;
+                        repeatUpdateHandler.post( new RptUpdater() );
+                        return false;
+                    }
+                }
+        );
+        ex2MinButton.setOnTouchListener( new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
+                        && mAutoDecrement2 ){
+                    mAutoDecrement2 = false;
+                }
+                return false;
+            }
+        });
+
+        ex2PlusButton.setOnLongClickListener(
+                new View.OnLongClickListener(){
+                    public boolean onLongClick(View arg0) {
+                        mAutoIncrement2 = true;
+                        repeatUpdateHandler.post( new RptUpdater() );
+                        return false;
+                    }
+                }
+        );
+        ex2PlusButton.setOnTouchListener( new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
+                        && mAutoIncrement2 ){
+                    mAutoIncrement2 = false;
+                }
+                return false;
+            }
+        });
 
         return rootView;
     }
@@ -108,42 +200,70 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
         if (v.equals(ex1MinButton)) {
             if (sport1CounterVal > 0) {
 //                sport1CounterVal--;
-                if (sport1NameString.equals("Running") || sport1NameString.equals("Biking"))
-                    sport1CounterVal -= 50;
-                else if (sport1NameString.equals("Jogging") || sport1NameString.equals("Jump Rope"))
-                    sport1CounterVal -= 10;
-                else
-                    sport1CounterVal--;
+                switch (sport1NameString) {
+                    case "Running":
+                    case "Biking":
+                        sport1CounterVal -= 50;
+                        break;
+                    case "Jogging":
+                    case "Jump Rope":
+                        sport1CounterVal -= 10;
+                        break;
+                    default:
+                        sport1CounterVal--;
+                        break;
+                }
             }
         } else if (v.equals(ex1PlusButton)) {
             if (sport1CounterVal < sport1MaxVal) {
 //                sport1CounterVal++;
-                if (sport1NameString.equals("Running") || sport1NameString.equals("Biking"))
-                    sport1CounterVal += 50;
-                else if (sport1NameString.equals("Jogging") || sport1NameString.equals("Jump Rope"))
-                    sport1CounterVal += 10;
-                else
-                    sport1CounterVal++;
+                switch (sport1NameString) {
+                    case "Running":
+                    case "Biking":
+                        sport1CounterVal += 50;
+                        break;
+                    case "Jogging":
+                    case "Jump Rope":
+                        sport1CounterVal += 10;
+                        break;
+                    default:
+                        sport1CounterVal++;
+                        break;
+                }
             }
         } else if (v.equals(ex2MinButton)) {
             if (sport2CounterVal > 0) {
 //                sport2CounterVal--;
-                if (sport2NameString.equals("Running") || sport2NameString.equals("Biking"))
-                    sport2CounterVal -= 50;
-                else if (sport2NameString.equals("Jogging") || sport2NameString.equals("Jump Rope"))
-                    sport2CounterVal -= 10;
-                else
-                    sport2CounterVal--;
+                switch (sport2NameString) {
+                    case "Running":
+                    case "Biking":
+                        sport2CounterVal -= 50;
+                        break;
+                    case "Jogging":
+                    case "Jump Rope":
+                        sport2CounterVal -= 10;
+                        break;
+                    default:
+                        sport2CounterVal--;
+                        break;
+                }
             }
         } else if (v.equals(ex2PlusButton)) {
             if (sport2CounterVal < sport2MaxVal) {
 //                sport2CounterVal++;
-                if (sport2NameString.equals("Running") || sport2NameString.equals("Biking"))
-                    sport2CounterVal += 50;
-                else if (sport2NameString.equals("Jogging") || sport2NameString.equals("Jump Rope"))
-                    sport2CounterVal += 10;
-                else
-                    sport2CounterVal++;
+                switch (sport2NameString) {
+                    case "Running":
+                    case "Biking":
+                        sport2CounterVal += 50;
+                        break;
+                    case "Jogging":
+                    case "Jump Rope":
+                        sport2CounterVal += 10;
+                        break;
+                    default:
+                        sport2CounterVal++;
+                        break;
+                }
             }
         }
         updateCounterValue();
@@ -252,6 +372,81 @@ public class FitnesinFragment extends Fragment implements View.OnClickListener{
 
         public int getValue() {
             return value;
+        }
+    }
+
+    class RptUpdater implements Runnable {
+        public void run() {
+            if( mAutoIncrement1 ){
+                if (sport1CounterVal < sport1MaxVal) {
+                    switch (sport1NameString) {
+                        case "Running":
+                        case "Biking":
+                            sport1CounterVal += 50;
+                            break;
+                        case "Jogging":
+                        case "Jump Rope":
+                            sport1CounterVal += 10;
+                            break;
+                        default:
+                            sport1CounterVal++;
+                            break;
+                    }
+                }
+                repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
+            } else if( mAutoDecrement1 ){
+                if (sport1CounterVal > 0) {
+                    switch (sport1NameString) {
+                        case "Running":
+                        case "Biking":
+                            sport1CounterVal -= 50;
+                            break;
+                        case "Jogging":
+                        case "Jump Rope":
+                            sport1CounterVal -= 10;
+                            break;
+                        default:
+                            sport1CounterVal--;
+                            break;
+                    }
+                }
+                repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
+            } else if( mAutoIncrement2 ){
+                if (sport2CounterVal < sport2MaxVal) {
+                    switch (sport2NameString) {
+                        case "Running":
+                        case "Biking":
+                            sport2CounterVal += 50;
+                            break;
+                        case "Jogging":
+                        case "Jump Rope":
+                            sport2CounterVal += 10;
+                            break;
+                        default:
+                            sport2CounterVal++;
+                            break;
+                    }
+                }
+                repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
+            } else if( mAutoDecrement2 ){
+                if (sport2CounterVal > 0) {
+                    switch (sport2NameString) {
+                        case "Running":
+                        case "Biking":
+                            sport2CounterVal -= 50;
+                            break;
+                        case "Jogging":
+                        case "Jump Rope":
+                            sport2CounterVal -= 10;
+                            break;
+                        default:
+                            sport2CounterVal--;
+                            break;
+                    }
+                }
+                repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
+            }
+            updateCounterValue();
         }
     }
 }
