@@ -128,8 +128,12 @@ public class InstructorsFragment extends Fragment {
 
             @Override
             public void onDataNotAvailable() {
-                Log.d("onDataNotAvailable", "error occured");
+                showMessage("Unable to fetch Instructors");
             }
         });
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 }

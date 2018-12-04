@@ -111,6 +111,24 @@ public class InstructorEditInfo extends Activity implements View.OnClickListener
             setResult(Activity.RESULT_CANCELED);
         } else if (v.equals(mSaveButton)) {
             // TODO: check for invalid data
+
+            boolean isValid = true;
+
+            String name = mName.getText().toString();
+            String city = mCity.getText().toString();
+
+            if (name.length() == 0) {
+                mName.setError("Name cannot be empty");
+                isValid = false;
+            }
+
+            if (city.length() == 0) {
+                mCity.setError("Location cannot be empty");
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
             Intent data = new Intent();
             data.putExtra("name", mName.getText().toString());
             data.putExtra("city", mCity.getText().toString());
